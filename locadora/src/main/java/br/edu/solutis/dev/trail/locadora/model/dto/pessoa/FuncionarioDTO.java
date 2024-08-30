@@ -1,33 +1,45 @@
 package br.edu.solutis.dev.trail.locadora.model.dto.pessoa;
 
-import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.annotations.NotFound;
+import br.edu.solutis.dev.trail.locadora.model.enums.SexoEnum;
+import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
 
+import java.time.LocalDate;
+
+@Data
 public class FuncionarioDTO {
     private Long id;
 
-    @NotNull(message = "O nome é obrigatório")
-    @NotBlank(message = "O nome é obrigatório")
-    @Size(min = 4, max = 255, message = "O nome deve ter entre 4 e 255 letras")
-    private String nome;
-
-    @NotFound(message = "O CNH é obrigatório")
-    @NotBlank(message = "O CNH é obrigatório")
-    @Size(max = 10, message = "CNH must be less than 10 characters long")
+    @NotNull(message = "O CNH é obrigatorio")
+    @NotBlank(message = "O CNH é obrigatorio")
+    @Size(max = 10, message = "O CNH deve ter menos de 10 caracteres")
     private String cnh;
 
-    @NotNull(message = "CPF é obrigatório")
-    @NotBlank(message = "CPF é obrigatório")
-    @Size(min = 14, max = 14, message = "CPF deve ter 14 caracteres")
+    @NotNull(message = "Coloque o nome")
+    @NotBlank(message = "Coloque o nome")
+    @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
+    private String nome;
+
+    @NotNull(message = "O CPF é obrigatório")
+    @NotBlank(message = "O CPF é obrigatório")
+    @Size(min = 14, max = 14, message = "O CPF deve ter 14 numeros")
     private String cpf;
 
-    @NotNull(message = "O genero é obrigatória)
-            @Column(name = "sexo", nullable = false)
+    @NotNull(message = "O aniversátio é obrigatorio")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDate aniversario;
+
+    @NotNull(message = "Voce deve escolher o sexo")
+    @Column(name = "sexo", nullable = false)
     private SexoEnum sexo;
 
-    @NotNull(message = "A matricula é obrigatório)
-    @NotBlank(message = "A matricula é obrigatório")
-    @Size(max = 255, message = "A matricula deve ter menos de 255 letras")
+    @NotNull(message = "A matrícula é obrigatoria")
+    @NotBlank(message = "A matrícula é obrigatoria")
+    @Size(max = 255, message = "A matrícula deve ter menos de 255 caracteres")
     private String matricula;
 }
-

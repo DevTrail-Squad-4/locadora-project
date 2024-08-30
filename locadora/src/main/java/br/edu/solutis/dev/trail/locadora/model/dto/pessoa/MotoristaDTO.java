@@ -1,11 +1,13 @@
 package br.edu.solutis.dev.trail.locadora.model.dto.pessoa;
 
 import br.edu.solutis.dev.trail.locadora.model.enums.SexoEnum;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jakarta.persistence.Column;
 import lombok.Data;
-import org.hibernate.annotations.NotFound;
 
 import java.time.LocalDate;
 
@@ -13,25 +15,26 @@ import java.time.LocalDate;
 public class MotoristaDTO {
     private Long id;
 
-    @NotNull(message = "O nome é obrigatório")
-    @NotBlank(message = "O nome é obrigatório")
-    @Size(min = 4, max = 255, message = "O nome deve ter entre 4 e 255 letras")
+    @NotNull(message = "Coloque o nome")
+    @NotBlank(message = "Coloque o nome")
+    @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
     private String nome;
 
-    @NotFound(message = "O CNH é obrigatório")
-    @NotBlank(message = "O CNH é obrigatório")
-    @Size(max = 10, message = "CNH must be less than 10 characters long")
-    private String cnh;
-
-    @NotNull(message = "CPF é obrigatório")
-    @NotBlank(message = "CPF é obrigatório")
-    @Size(min = 14, max = 14, message = "CPF deve ter 14 caracteres")
+    @NotNull(message = "O CPF é obrigatório")
+    @NotBlank(message = "O CPF é obrigatório")
+    @Size(min = 14, max = 14, message = "O CPF deve ter 14 numeros")
     private String cpf;
 
-    @NotNull(message = "A data de aniversário é obrigatória")
+    @NotNull(message = "O aniversátio é obrigatorio")
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate aniversario;
 
-    @NotNull(message = "O genero é obrigatória)
+    @NotNull(message = "Voce deve escolher o sexo")
     @Column(name = "sexo", nullable = false)
     private SexoEnum sexo;
+
+    @NotNull(message = "A matrícula é obrigatoria")
+    @NotBlank(message = "A matrícula é obrigatoria")
+    @Size(max = 255, message = "A matrícula deve ter menos de 255 caracteres")
+    private String matricula;
 }
