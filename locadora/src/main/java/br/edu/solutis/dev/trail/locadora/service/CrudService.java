@@ -1,14 +1,15 @@
 package br.edu.solutis.dev.trail.locadora.service;
 import br.edu.solutis.dev.trail.locadora.response.PageResponse;
 
-public interface CrudService<T> {
-    T findById(Long id);
+import java.util.List;
 
-    PageResponse<T> findAll(int pageNo, int pageSize);
+public abstract class CrudService<T> {
 
-    T add(T payload);
+    public abstract T obterPorId( Long id) ;
 
-    T update(T payload);
+    public abstract List<T> obterTodos();
 
-    void deleteById(Long id);
+    public abstract T salvar( T payload);
+
+    public abstract void excluirPorId( Long id);
 }

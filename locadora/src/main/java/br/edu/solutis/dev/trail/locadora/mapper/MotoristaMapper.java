@@ -13,9 +13,9 @@ public interface MotoristaMapper {
 
     // Mapeia Motorista para MotoristaDTO
     @Mapping(source = "aniversario", target = "aniversario")
-    MotoristaDTO toDTO(MotoristaEntity motorista);
+    MotoristaDTO modelToDTO(MotoristaEntity motorista);
 
     // Mapeia MotoristaDTO para Motorista
     @Mapping(source = "aniversario", target = "aniversario")
-    MotoristaEntity toEntity(MotoristaDTO motoristaDTO);
+    MotoristaEntity dtoToModel(MotoristaDTO motoristaDTO);
 }

@@ -1,4 +1,4 @@
-package br.edu.solutis.dev.trail.locadora.repository.person;
+package br.edu.solutis.dev.trail.locadora.repository.pessoa;
 
 import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.MotoristaEntity;
 import org.springframework.data.domain.Page;
