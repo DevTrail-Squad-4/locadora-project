@@ -1,6 +1,5 @@
-package br.edu.solutis.dev.trail.locadora.model.entity;
+package br.edu.solutis.dev.trail.locadora.model.entity.pessoa;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
