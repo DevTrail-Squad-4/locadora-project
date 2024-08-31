@@ -4,6 +4,7 @@ import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.MotoristaDTO;
 import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.MotoristaEntity;
 import br.edu.solutis.dev.trail.locadora.repository.pessoa.MotoristaRepository;
 import br.edu.solutis.dev.trail.locadora.response.PageResponse;
+import br.edu.solutis.dev.trail.locadora.service.CrudService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRED)
 public class MotoristaService implements CrudService<MotoristaDTO> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DriverService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MotoristaService.class);
     private final MotoristaRepository driverRepository;
     private final GenericMapper<MotoristaDTO, MotoristaEntity> modelMapper;
 
@@ -108,7 +109,7 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
         }
     }
 
-    private void updateDriverFields(MotoristaDto payload, MotoristaDto existingDriver) {
+    private void updateDriverFields(MotoristaDTO payload, MotoristaDTO existingDriver) {
         if (payload.getName() != null) {
             existingDriver.setName(payload.getName());
         }
