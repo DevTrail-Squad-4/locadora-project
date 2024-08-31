@@ -1,9 +1,10 @@
-package br.edu.solutis.dev.trail.locadora.service;
+package br.edu.solutis.dev.trail.locadora.service.pessoa;
 
 import br.edu.solutis.dev.trail.locadora.mapper.MotoristaMapper;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.MotoristaDTO;
 import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.MotoristaEntity;
 import br.edu.solutis.dev.trail.locadora.repository.pessoa.MotoristaRepository;
+import br.edu.solutis.dev.trail.locadora.service.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
