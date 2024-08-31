@@ -41,25 +41,25 @@ public class Aluguel {
     @Column(nullable = false)
     private boolean finalizado = false;
 
-    @JsonIgnoreProperties("rents")
+    @JsonIgnoreProperties("alugueis")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "insurance_policy_id", nullable = false)
+    @JoinColumn(name = "apolice_seguro_id", nullable = false)
     private ApoliceSeguro apoliceSeguro;
 
-    @JsonIgnoreProperties("rents")
+    @JsonIgnoreProperties("Alugueis")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "driver_id", nullable = false)
+    @JoinColumn(name = "motorista_id", nullable = false)
     private Motorista motorista;
 
-    @JsonIgnoreProperties("rents")
+    @JsonIgnoreProperties("Alugueis")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "car_id", nullable = false)
+    @JoinColumn(name = "carro_id", nullable = false)
     private Carro carro;
 
-    @JsonIgnoreProperties("rents")
+    @JsonIgnoreProperties("Alugueis")
     @ManyToOne
     @JoinColumn(name = "carrinho_id", nullable = false)
-    private Carrrinho carrinho;
+    private Carrinho carrinho;
 
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
