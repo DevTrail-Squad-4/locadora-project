@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "InsurancePolicyController")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/insurances")
+@RequestMapping("/seguros")
 @CrossOrigin
 public class ApoliceSeguroController {
     private final ApoliceSeguroService ApoliceSeguroService;
@@ -28,7 +28,7 @@ public class ApoliceSeguroController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(insurancePolicyService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(ApoliceSeguroService.findById(id), HttpStatus.OK);
         } catch (InsurancePolicyNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (InsurancePolicyException e) {
@@ -42,11 +42,11 @@ public class ApoliceSeguroController {
     )
     @GetMapping
     public ResponseEntity<?> findAll(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "3") int tamanho
     ) {
         try {
-            return new ResponseEntity<>(insurancePolicyService.findAll(page, size), HttpStatus.OK);
+            return new ResponseEntity<>(ApoliceSeguroService.findAll(pagina, tamanho), HttpStatus.OK);
         } catch (InsurancePolicyException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -57,9 +57,9 @@ public class ApoliceSeguroController {
             description = "Retorna as informações do seguro adicionado"
     )
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody InsurancePolicyDto payload) {
+    public ResponseEntity<?> add(@RequestBody ApoliceSeguroDto payload) {
         try {
-            return new ResponseEntity<>(insurancePolicyService.add(payload), HttpStatus.CREATED);
+            return new ResponseEntity<>(ApoliceSeguroService.add(payload), HttpStatus.CREATED);
         } catch (InsurancePolicyException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -70,9 +70,9 @@ public class ApoliceSeguroController {
             description = "Retorna o codigo 204 (No Content)"
     )
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody InsurancePolicyDto payload) {
+    public ResponseEntity<?> update(@RequestBody ApoliceSeguroDto payload) {
         try {
-            return new ResponseEntity<>(insurancePolicyService.update(payload), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(ApoliceSeguroService.update(payload), HttpStatus.NO_CONTENT);
         } catch (InsurancePolicyNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (InsurancePolicyException e) {
@@ -87,7 +87,7 @@ public class ApoliceSeguroController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         try {
-            insurancePolicyService.deleteById(id);
+            ApoliceSeguroService.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (InsurancePolicyNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);

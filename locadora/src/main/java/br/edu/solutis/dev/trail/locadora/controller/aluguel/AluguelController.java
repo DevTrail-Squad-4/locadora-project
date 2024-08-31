@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/alugueis")
 @CrossOrigin
-public class ALuguelController {
+public class AluguelController {
     private final AluguelService aluguelService;
 
     @Operation(
