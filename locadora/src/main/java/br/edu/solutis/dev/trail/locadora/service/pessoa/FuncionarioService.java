@@ -104,7 +104,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
             employeeRepository.save(Employee);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new EmployeeException("Um erro ocorreu ao delter funcionario.", e);
+            throw new EmployeeException("Um erro ocorreu ao deletar funcionario.", e);
         }
     }
 
