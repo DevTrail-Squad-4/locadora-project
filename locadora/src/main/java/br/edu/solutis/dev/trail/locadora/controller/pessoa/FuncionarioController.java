@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "EmployeeController")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/employees")
+@RequestMapping("/funcionarios")
 @CrossOrigin
 public class FuncionarioController {
     private final FuncionarioService employeeService;

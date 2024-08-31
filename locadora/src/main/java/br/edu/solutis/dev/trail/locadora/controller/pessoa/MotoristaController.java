@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "DriverController")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/drivers")
+@RequestMapping("/motoristas")
 @CrossOrigin
 public class MotoristaController {
     private final MotoristaService driverService;
