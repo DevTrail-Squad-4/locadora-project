@@ -24,9 +24,9 @@ public class AluguelController {
     ) {
         try {
             return new ResponseEntity<>(aluguelService.finishRent(motoristaId, aluguelId), HttpStatus.OK);
-        } catch (RentNotFoundException e) {
+        } catch (AluguelNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (RentException e) {
+        } catch (AluguelException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -40,7 +40,7 @@ public class AluguelController {
     public ResponseEntity<?> finishRent() {
         try {
             return new ResponseEntity<>(aluguelService.findFinishedRents(), HttpStatus.OK);
-        } catch (RentException e) {
+        } catch (AluguelException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -53,7 +53,7 @@ public class AluguelController {
     public ResponseEntity<?> findActiveRents() {
         try {
             return new ResponseEntity<>(aluguelService.findActiveRents(), HttpStatus.OK);
-        } catch (RentException e) {
+        } catch (AluguelException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

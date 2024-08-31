@@ -31,9 +31,9 @@ public class FuncionarioController {
     public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(employeeService.findById(id), HttpStatus.OK);
-        } catch (EmployeeNotFoundException e) {
+        } catch (FuncionarioNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (EmployeeException e) {
+        } catch (FuncionarioException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -48,7 +48,7 @@ public class FuncionarioController {
             @RequestParam(defaultValue = "3") int size) {
         try {
             return new ResponseEntity<>(employeeService.findAll(page, size), HttpStatus.OK);
-        } catch (EmployeeException e) {
+        } catch (FuncionarioException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -60,10 +60,10 @@ public class FuncionarioController {
     @PostMapping
     public ResponseEntity<?> add(@RequestBody FuncionarioDTO payload) {
         try {
-            FuncionarioDTO employeeDto = employeeService.add(payload);
+            FuncionarioDTO funcionarioDto = FuncionarioService.add(payload);
 
-            return new ResponseEntity<>(employeeDto, HttpStatus.CREATED);
-        } catch (EmployeeException e) {
+            return new ResponseEntity<>(funcionarioDto, HttpStatus.CREATED);
+        } catch (FuncionarioException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -75,10 +75,10 @@ public class FuncionarioController {
     @PutMapping
     public ResponseEntity<?> update(@RequestBody FuncionarioDTO payload) {
         try {
-            return new ResponseEntity<>(employeeService.update(payload), HttpStatus.NO_CONTENT);
-        } catch (EmployeeNotFoundException e) {
+            return new ResponseEntity<>(FuncionarioService.update(payload), HttpStatus.NO_CONTENT);
+        } catch (FuncionarioNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (EmployeeException e) {
+        } catch (FuncionarioException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -90,12 +90,12 @@ public class FuncionarioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         try {
-            employeeService.deleteById(id);
+            FuncionarioService.deleteById(id);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (EmployeeNotFoundException e) {
+        } catch (FuncionarioNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (EmployeeException e) {
+        } catch (FuncionarioException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
