@@ -1,5 +1,6 @@
 package br.com.solutis.locadora.service.person;
 
+import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.MotoristaDTO;
 import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.MotoristaEntity;
 import br.edu.solutis.dev.trail.locadora.repository.pessoa.MotoristaRepository;
 import br.edu.solutis.dev.trail.locadora.response.PageResponse;
@@ -18,29 +19,29 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.REQUIRED)
-public class DriverService implements CrudService<MotoristaDto> {
+public class MotoristaService implements CrudService<MotoristaDTO> {
     private static final Logger LOGGER = LoggerFactory.getLogger(DriverService.class);
     private final MotoristaRepository driverRepository;
-    private final GenericMapper<DriverDto, MotoristaEntity> modelMapper;
+    private final GenericMapper<MotoristaDTO, MotoristaEntity> modelMapper;
 
-    public MotoristaDto findById(Long id) {
-        LOGGER.info("Finding driver with ID: {}", id);
+    public MotoristaDTO findById(Long id) {
+        LOGGER.info("Encontrando motorista com o id: {}", id);
         MotoristaEntity driver = getDriver(id);
 
-        return modelMapper.mapModelToDto(driver, MotoristaDto.class);
+        return modelMapper.mapModelToDto(driver, MotoristaDTO.class);
     }
 
-    public PageResponse<MotoristaDto> findAll(int pageNo, int pageSize) {
+    public PageResponse<MotoristaDTO> findAll(int pageNo, int pageSize) {
         LOGGER.info("Fetching drivers with page number {} and page size {}.", pageNo, pageSize);
 
         try {
             Pageable paging = PageRequest.of(pageNo, pageSize);
             Page<MotoristaEntity> pagedDrivers = driverRepository.findByDeletedFalse(paging);
 
-            List<MotoristaDto> driverDtos = modelMapper
-                    .mapList(pagedDrivers.getContent(), MotoristaDto.class);
+            List<MotoristaDTO> driverDtos = modelMapper
+                    .mapList(pagedDrivers.getContent(), MotoristaDTO.class);
 
-            PageResponse<MotoristaDto> pageResponse = new PageResponse<>();
+            PageResponse<MotoristaDTO> pageResponse = new PageResponse<>();
             pageResponse.setContent(driverDtos);
             pageResponse.setCurrentPage(pagedDrivers.getNumber());
             pageResponse.setTotalItems(pagedDrivers.getTotalElements());
@@ -50,48 +51,48 @@ public class DriverService implements CrudService<MotoristaDto> {
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new DriverException("An error occurred while fetching drivers.", e);
+            throw new DriverException("Um erro ocorreu durante o carregamento de motoristas.", e);
         }
     }
 
-    public MotoristaDto add(MotoristaDto payload) {
+    public MotoristaDTO add(MotoristaDTO payload) {
         try {
-            LOGGER.info("Adding driver: {}", payload);
+            LOGGER.info("Salvando motorista: {}", payload);
 
             MotoristaEntity driver = driverRepository
                     .save(modelMapper.mapDtoToModel(payload, MotoristaEntity.class));
 
-            return modelMapper.mapModelToDto(driver, MotoristaDto.class);
+            return modelMapper.mapModelToDto(driver, MotoristaDTO.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new DriverException("An error occurred while adding driver.", e);
+            throw new DriverException("Um erro ocorreu ao salvar o motorista.", e);
         }
     }
 
-    public MotoristaDto update(MotoristaDto payload) {
+    public MotoristaDTO update(MotoristaDTO payload) {
         MotoristaEntity existingDriver = getDriver(payload.getId());
         if (existingDriver.isDeleted()) throw new DriverNotFoundException(existingDriver.getId());
 
         try {
-            LOGGER.info("Updating driver: {}", payload);
-            MotoristaDto driverDto = modelMapper
-                    .mapModelToDto(existingDriver, MotoristaDto.class);
+            LOGGER.info("Editando motorista: {}", payload);
+            MotoristaDTO driverDto = modelMapper
+                    .mapModelToDto(existingDriver, MotoristaDTO.class);
 
             updateDriverFields(payload, driverDto);
 
             MotoristaEntity driver = driverRepository
                     .save(modelMapper.mapDtoToModel(driverDto, MotoristaEntity.class));
 
-            return modelMapper.mapModelToDto(driver, DriverDto.class);
+            return modelMapper.mapModelToDto(driver, MotoristaDTO.class);
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new DriverException("An error occurred while updating driver.", e);
+            throw new DriverException("Um erro ocorreu ao editar o motorista", e);
         }
     }
 
     public void deleteById(Long id) {
-        MotoristaDto driverDto = findById(id);
+        MotoristaDTO driverDto = findById(id);
 
         try {
             LOGGER.info("Soft deleting driver with ID: {}", id);
@@ -103,7 +104,7 @@ public class DriverService implements CrudService<MotoristaDto> {
             driverRepository.save(driver);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new DriverException("An error occurred while deleting driver.", e);
+            throw new DriverException("Um erro ocorreu ao deleter o usuario", e);
         }
     }
 
@@ -124,7 +125,7 @@ public class DriverService implements CrudService<MotoristaDto> {
 
     private MotoristaEntity getDriver(Long id) {
         return driverRepository.findById(id).orElseThrow(() -> {
-            LOGGER.error("Driver with ID {} not found.", id);
+            LOGGER.error("Motorista com o id {} não encontrado.", id);
             return new DriverNotFoundException(id);
         });
     }
