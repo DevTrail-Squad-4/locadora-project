@@ -38,7 +38,7 @@ public class CarrinhoService {
     private final GenericMapper<CarrinhoDtoResponse,Carrinho> modelMapperResponse;
 
     public CarrinhoDtoResponse encontrarPeloId(Long id) {
-        LOGGER.info("Finding cart with ID: {}", id);
+        LOGGER.info("Procurando carrinho com o ID: {}", id);
 
         Carrinho carrinho = carrinhoRepository.encontrarPeloId(id).orElseThrow(() -> new CarrinhoNotFoundException(id));
 
@@ -46,12 +46,12 @@ public class CarrinhoService {
     }
 
     public CarrinhoDtoResponse encontrarPeloIdMotorista(Long motoristaId) {
-        LOGGER.info("Finding cart with driver ID: {}", motoristaId);
+        LOGGER.info("Buscando carrinho com o ID do motorista: {}", motoristaId);
 
         Carrinho carrinho = carrinhoRepository.encontrarCarrinhoPorMotoristaId(motoristaId);
 
         if (carrinho == null) {
-            LOGGER.error("Carrinho com o ID de motorista {} not found.", motoristaId);
+            LOGGER.error("Carrinho com o ID de motorista {} nao encontrado.", motoristaId);
             throw new CarrinhoNotFoundException(motoristaId);
         }
 
@@ -60,7 +60,7 @@ public class CarrinhoService {
 
     public PageResponse<CartDtoResponse> encontrarTodos(int numeroPagina, int tamanhoPagina) {
         try {
-            LOGGER.info("Fetching carts with page number {} and page size {}.", numeroPagina, tamanhoPagina);
+            LOGGER.info("Buscando carrinhos com número da página {} e tamanho da página {}.", numeroPagina, tamanhoPagina);
 
             Pageable paginacao = PageRequest.of(numeroPagina, tamanhoPagina);
             Page<Carrinho> carrinhosPaginados = carrinhoRepository.encontrarTodos(paginacao);
@@ -76,38 +76,38 @@ public class CarrinhoService {
 
             return pageResponse;
         } catch (Exception e) {
-            LOGGER.error("An error occurred while fetching insurance policies: {}", e.getMessage());
-            throw new CarrinhoException("An error occurred while fetching cart.", e);
+            LOGGER.error("Ocorreu um erro ao buscar apólices de seguro: {}", e.getMessage());
+            throw new CarrinhoException("Ocorreu um erro ao buscar o carrinho.", e);
         }
     }
 
-    public CarrinhoDtoResponse add(CarrinhoDto pagamento) {
+    public CarrinhoDtoResponse add(CarrinhoDto payload) {
         try {
-            LOGGER.info("Adding a new cart: {}", pagamento);
+            LOGGER.info("Adicionando um novo carrinho: {}", payload);
 
             Carrinho carrinho = carrinhoRepository
-                    .save(modelMapper.mapDtoToModel(pagamento, Carrinho.class));
+                    .save(modelMapper.mapDtoToModel(payload, Carrinho.class));
 
             return modelMapperResponse.mapModelToDto(carrinho, CarrinhoDtoResponse.class);
         } catch (Exception e) {
-            LOGGER.error("An error occurred while adding a new cart: {}", e.getMessage());
-            throw new CarrinhoException("An error occurred while adding a new cart.", e);
+            LOGGER.error("Ocorreu um erro ao adicionar um novo carrinho: {}", e.getMessage());
+            throw new CarrinhoException("Ocorreu um erro ao adicionar um novo carrinho.", e);
         }
     }
 
-    public CarrinhoDto update(CarrinhoDto pagamento) {
+    public CarrinhoDto update(CarrinhoDto payload) {
         try {
-            LOGGER.info("Updating cart: {}", pagamento);
+            LOGGER.info("Atualizando carrinho: {}", payload);
 
-            Carrinho carrinhoMotorista = carrinhoRepository.findBymotoristaId(pagamento.getIdMotorista());
+            Carrinho carrinhoMotorista = carrinhoRepository.findBymotoristaId(payload.getIdMotorista());
             if (carrinhoMotorista.isDeleted()) throw new CarrinhoNotFoundException(carrinhoMotorista.getId());
 
             Carrinho carrinho = carrinhoRepository.save(carrinhoMotorista);
 
             return modelMapper.mapModelToDto(carrinho, CarrinhoDto.class);
         } catch (Exception e) {
-            LOGGER.error("An error occurred while updating cart: {}", e.getMessage());
-            throw new CarrinhoException("An error occurred while updating cart.", e);
+            LOGGER.error("Ocorreu um erro ao atualizar o carrinho: {}", e.getMessage());
+            throw new CarrinhoException("Ocorreu um erro ao atualizar o carrinho.", e);
         }
     }
 
@@ -115,20 +115,20 @@ public class CarrinhoService {
         Carrinho carrinho = carrinhoRepository.encontrarPeloId(id).orElseThrow();
 
         try {
-            LOGGER.info("Soft deleting cart with ID: {}", id);
+            LOGGER.info("Excluindo o carrinho com ID: {}", id);
 
             carrinho.setDeleted(true);
 
             carrinhoRepository.save(carrinho);
         } catch (Exception e) {
-            LOGGER.error("An error occurred while deleting cart: {}", e.getMessage());
-            throw new CarrinhoException("An error occurred while deleting cart.", e);
+            LOGGER.error("Ocorreu um erro ao excluir o carrinho: {}", e.getMessage());
+            throw new CarrinhoException("Ocorreu um erro ao excluir o carrinho.", e);
         }
     }
 
     public CarrinhoDto adicionarPeloIdMotorista(long motoristaId) {
         try {
-            LOGGER.info("Adding cart with driver ID: {}", motoristaId);
+            LOGGER.info("Adicionando carrinho com ID do motorista: {}", motoristaId);
 
             Motorista motorista = getMotoristaPeloId(motoristaId);
 
@@ -139,14 +139,14 @@ public class CarrinhoService {
 
             return modelMapper.mapModelToDto(savedCart, CarrinhoDto.class);
         } catch (Exception e) {
-            LOGGER.error("An error occurred while adding cart: {}", e.getMessage());
-            throw new CarrinhoException("An error occurred while adding cart.", e);
+            LOGGER.error("Ocorreu um erro ao adicionar o carrinho: {}", e.getMessage());
+            throw new CarrinhoException("Ocorreu um erro ao adicionar o carrinho.", e);
         }
     }
 
     public void deletarPeloIdMotorista(long motoristaId) {
         try {
-            LOGGER.info("Deleting cart with driver ID: {}", motoristaId);
+            LOGGER.info("Excluindo carrinho com ID do motorista: {}", motoristaId);
 
             Carrinho carrinho = carrinhoRepository.encontrarPeloIdMotorista(motoristaId);
 
@@ -156,14 +156,14 @@ public class CarrinhoService {
                 carrinhoRepository.save(carrinho);
             }
         } catch (Exception e) {
-            LOGGER.error("An error occurred while deleting cart: {}", e.getMessage());
-            throw new CarrinhoException("An error occurred while deleting cart.", e);
+            LOGGER.error("Ocorreu um erro ao excluir o carrinho: {}", e.getMessage());
+            throw new CarrinhoException("Ocorreu um erro ao excluir o carrinho.", e);
         }
     }
 
     public Aluguel encontrarAluguelnoCarrinhoPeloIdMotoristaEIdAluguel (long motoristaId, long aluguelId) {
         try {
-            LOGGER.info("Finding rent with ID {} in cart with driver ID: {}", aluguelId, motoristaId);
+            LOGGER.info("Buscando aluguel com ID {} no carrinho com ID do motorista: {}", aluguelId, motoristaId);
 
             Carrinho carrinho = carrinhoRepository.findBymotoristaId(motoristaId);
             Aluguel aluguel = getAluguelPeloID(aluguelId);
@@ -174,15 +174,15 @@ public class CarrinhoService {
 
             throw new AluguelNotFoundException(aluguelId);
         } catch (Exception e) {
-            LOGGER.error("An error occurred while finding rent in cart: {}", e.getMessage());
-            throw new CarrinhoException("An error occurred while finding rent in cart.", e);
+            LOGGER.error("Ocorreu um erro ao buscar o aluguel no carrinho: {}", e.getMessage());
+            throw new CarrinhoException("Ocorreu um erro ao buscar o aluguel no carrinho.", e);
         }
     }
 
     addRentToCartBymotoristaId
     public CarrinhoDto addAluguelAUmCarrinhoPeloIdMotorista (long motoristaId, long aluguelId) {
         try {
-            LOGGER.info("Adding rent with ID {} to cart with driver ID: {}", aluguelId, motoristaId);
+            LOGGER.info("Adicionando aluguel com ID {} ao carrinho com ID do motorista: {}", aluguelId, motoristaId);
 
             Carrinho carrinho = carrinhoRepository.encontrarPeloIdMotorista(motoristaId);
             Aluguel aluguel = getAluguelPeloID(aluguelId);
@@ -192,14 +192,14 @@ public class CarrinhoService {
 
             return modelMapper.mapModelToDto(updatedCarrinho, CarrinhoDto.class);
         } catch (Exception e) {
-            LOGGER.error("An error occurred while adding rent to cart: {}", e.getMessage());
-            throw new CarrinhoException("An error occurred while adding rent to cart.", e);
+            LOGGER.error("Ocorreu um erro ao adicionar o aluguel ao carrinho: {}", e.getMessage());
+            throw new CarrinhoException("Ocorreu um erro ao adicionar o aluguel ao carrinho.", e);
         }
     }
 
     public CarrinhoDtoResponse removerAluguelDoCarrinhoPeloIdMotorista(long motoristaId, long aluguelId) {
         try {
-            LOGGER.info("Removing rent with ID {} from cart with driver ID: {}", aluguelId, motoristaId);
+            LOGGER.info("Removendo aluguel com ID {} do carrinho com ID do motorista: {}", aluguelId, motoristaId);
 
             Carrinho carrinho = carrinhoRepository.encontrarCarrinhoPorMotoristaId(motoristaId);
             Aluguel aluguel = getAluguelPeloID(aluguelId);
@@ -211,21 +211,21 @@ public class CarrinhoService {
 
             return modelMapperResponse.mapModelToDto(updatedCarrinho, CarrinhoDtoResponse.class);
         } catch (Exception e) {
-            LOGGER.error("An error occurred while removing rent from cart: {}", e.getMessage());
-            throw new CartException("An error occurred while removing rent from cart.", e);
+            LOGGER.error("Ocorreu um erro ao remover o aluguel do carrinho: {}", e.getMessage());
+            throw new CarrinhoException("Ocorreu um erro ao remover o aluguel do carrinho.", e);
         }
     }
 
     private Motorista getMotoristaPeloIdID(long motoristaId) {
         return motoristaRepository.encontrarPeloId(motoristaId).orElseThrow(() -> {
-            LOGGER.error("Driver with ID {} not found.", motoristaId);
+            LOGGER.error("Motorista com ID {} não encontrado.", motoristaId);
             return new DriverNotFoundException(motoristaId);
         });
     }
 
     private Aluguel getAluguelPeloID(long aluguelId) {
         return aluguelRepository.encontrarPeloId(aluguelId).orElseThrow(() -> {
-            LOGGER.error("Rent with ID {} not found.", aluguelId);
+            LOGGER.error("Aluguel com ID {} não encontrado.", aluguelId);
             return new RentNotFoundException(aluguelId);
         });
     }
