@@ -3,13 +3,14 @@ import br.edu.solutis.dev.trail.locadora.response.PageResponse;
 
 import java.util.List;
 
-public abstract class CrudService<T> {
+public interface CrudService<T> {
+    T findById(Long id);
 
-    public abstract T obterPorId( Long id) ;
+    PageResponse<T> findAll(int pageNo, int pageSize);
 
-    public abstract List<T> obterTodos();
+    T add(T payload);
 
-    public abstract T salvar( T payload);
+    T update(T payload);
 
-    public abstract void excluirPorId( Long id);
+    void deleteById(Long id);
 }
