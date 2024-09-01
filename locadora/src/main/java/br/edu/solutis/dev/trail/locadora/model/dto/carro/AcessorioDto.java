@@ -11,8 +11,8 @@ import lombok.EqualsAndHashCode;
 public class AcessorioDto {
     private Long id;
 
-    @NotNull(message = "Description is required")
-    @NotBlank(message = "Description is required")
-    @Size(min = 1, max = 255, message = "Description must be between 1 and 255 characters long")
+    @NotNull(message = "Descrição é obrigatória")
+    @NotBlank(message = "Descrição é obrigatória")
+    @Size(min = 1, max = 255, message = "Descrição deve ter entre 1 e 255 caracteres")
     private String description;
 }
