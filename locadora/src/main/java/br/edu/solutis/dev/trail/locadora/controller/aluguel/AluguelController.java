@@ -24,12 +24,12 @@ public class AluguelController {
             description = "Retorna as informações do aluguel"
     )
     @PostMapping("/{motoristaId}/alugueis/{alugueisId}/final")
-    public ResponseEntity<?> finishRent(
+    public ResponseEntity<?> finishAluguel(
             @PathVariable Long motoristaId,
             @PathVariable Long aluguelId
     ) {
         try {
-            return new ResponseEntity<>(aluguelService.finishRent(motoristaId, aluguelId), HttpStatus.OK);
+            return new ResponseEntity<>(aluguelService.finishAluguel(motoristaId, aluguelId), HttpStatus.OK);
         } catch (AluguelNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (AluguelException e) {
@@ -45,7 +45,7 @@ public class AluguelController {
     @GetMapping("/finalizado")
     public ResponseEntity<?> finishRent() {
         try {
-            return new ResponseEntity<>(aluguelService.findFinishedRents(), HttpStatus.OK);
+            return new ResponseEntity<>(aluguelService.findAlugueisFinalizados(), HttpStatus.OK);
         } catch (AluguelException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -58,7 +58,7 @@ public class AluguelController {
     @GetMapping("/ativo")
     public ResponseEntity<?> findActiveRents() {
         try {
-            return new ResponseEntity<>(aluguelService.findActiveRents(), HttpStatus.OK);
+            return new ResponseEntity<>(aluguelService.findAlugueisAtivos(), HttpStatus.OK);
         } catch (AluguelException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
