@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "models")
+@Table(name = "modelos")
 public class Modelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,11 +62,11 @@ public class Modelo {
     public String toString() {
         return "Modelo{" +
                 "id=" + id +
-                ", description='" + description + '\'' +
-                ", category=" + category +
-                ", deleted=" + deleted +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
+                ", descrição='" + description + '\'' +
+                ", categoria=" + category +
+                ", excluido=" + deleted +
+                ", criadoEm=" + createdAt +
+                ", atualizadoEm=" + updatedAt +
                 '}';
     }
 }
