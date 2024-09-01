@@ -1,28 +1,28 @@
-package br.edu.solutis.dev.trail.locadora.service;
+package br.edu.solutis.dev.trail.locadora.service.aluguel;
 
 
 
-import br.edu.solutis.dev.trail.locadora.exception.car.CarAlreadyRentedException;
-import br.edu.solutis.dev.trail.locadora.exception.car.CarException;
-import br.edu.solutis.dev.trail.locadora.exception.car.CarNotRentedException;
-import br.edu.solutis.dev.trail.locadora.exception.person.driver.DriverException;
-import br.edu.solutis.dev.trail.locadora.exception.person.driver.DriverNotAuthorizedException;
-import br.edu.solutis.dev.trail.locadora.exception.rent.RentAlreadyConfirmedException;
-import br.edu.solutis.dev.trail.locadora.exception.rent.RentException;
-import br.edu.solutis.dev.trail.locadora.exception.rent.RentNotConfirmedException;
-import br.edu.solutis.dev.trail.locadora.exception.rent.RentNotFoundException;
+import br.edu.solutis.dev.trail.locadora.exception.carro.CarroAlreadyRentedException;
+import br.edu.solutis.dev.trail.locadora.exception.carro.CarroException;
+import br.edu.solutis.dev.trail.locadora.exception.carro.CarroNotRentedException;
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaException;
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaNotAuthorizedException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.AluguelAlreadyConfirmedException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.AluguelException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.AluguelNotConfirmedException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.AluguelNotFoundException;
 import br.edu.solutis.dev.trail.locadora.mapper.GenericMapper;
 import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.AluguelDto;
-import br.edu.solutis.dev.trail.locadora.model.dto.rent.RentDtoResponse;
-import br.edu.solutis.dev.trail.locadora.model.entity.car.Car;
-import br.edu.solutis.dev.trail.locadora.model.entity.person.Driver;
-import br.edu.solutis.dev.trail.locadora.model.entity.rent.InsurancePolicy;
-import br.edu.solutis.dev.trail.locadora.model.entity.Aluguel;
-import br.edu.solutis.dev.trail.locadora.model.entity.ApoliceSeguro;
-import br.edu.solutis.dev.trail.locadora.repository.car.CarRepository;
-import br.edu.solutis.dev.trail.locadora.repository.person.DriverRepository;
-import br.edu.solutis.dev.trail.locadora.repository.rent.InsurancePolicyRepository;
-import br.edu.solutis.dev.trail.locadora.repository.rent.RentRepository;
+import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.AluguelDtoResponse;
+import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.Aluguel;
+import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.ApoliceSeguro;
+import br.edu.solutis.dev.trail.locadora.model.entity.carro.Carro;
+import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.Motorista;
+import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.ApoliceSeguro;
+import br.edu.solutis.dev.trail.locadora.repository.carro.CarroRepository;
+import br.edu.solutis.dev.trail.locadora.repository.pessoa.MotoristaRepository;
+import br.edu.solutis.dev.trail.locadora.repository.aluguel.ApoliceSeguroRepository;
+import br.edu.solutis.dev.trail.locadora.repository.aluguel.AluguelRepository;
 import br.edu.solutis.dev.trail.locadora.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -44,12 +44,12 @@ import java.util.List;
 public class AluguelService {
     private static final Logger LOGGER = LoggerFactory.getLogger(AluguelService.class);
 
-    private final AluguelRepository AluguelRepository;
+    private final AluguelRepository aluguelRepository;
     private final GenericMapper<AluguelDto, Aluguel> modelMapper;
     private final GenericMapper<AluguelDtoResponse, Aluguel> modelMapperResponse;
     private final ApoliceSeguroRepository apoliceSeguroRepository;
     private final CarroRepository carroRepository;
-    private final MotoristaRepository MotoristaRepository;
+    private final MotoristaRepository motoristaRepository;
 
     public AluguelDtoResponse findById(Long id) {
         LOGGER.info("Buscando aluguel com ID: {}", id);
@@ -67,7 +67,7 @@ public class AluguelService {
 
             List<AluguelDtoResponse> aluguelsDto = modelMapper.mapList(alugueisPaginados.getContent(), AluguelDtoResponse.class);
 
-            PageResponse<RentDtoResponse> pageResponse = new PageResponse<>();
+            PageResponse<AluguelDtoResponse> pageResponse = new PageResponse<>();
             pageResponse.setContent(aluguelsDto);
             pageResponse.setCurrentPage(alugueisPaginados.getNumber());
             pageResponse.setTotalItems(alugueisPaginados.getTotalElements());
@@ -91,7 +91,7 @@ public class AluguelService {
             }
 
             payload.setCarrinhoId(motorista.getCarrinho().getId());
-            calculoAluguel(payload, carro.getValorDiário(), apoliceSeguro.getValorFranquia());
+            calculoAluguel(payload, carro.getValorDiario(), apoliceSeguro.getValorFranquia());
 
             Aluguel aluguel = aluguelRepository.save(modelMapper.mapDtoToModel(payload, Aluguel.class));
 
@@ -131,7 +131,7 @@ public class AluguelService {
             throw new AluguelException("O aluguel com o ID " + id + " nao foi encontrado.", e);
         } catch (CarroAlreadyRentedException e) {
             LOGGER.error("Ocorreu um erro ao confirmar o aluguel com ID {}", id, e);
-            throw new CareoException("O carro com o ID " + aluguel.getCarro().getId() + " ja está alugado.", e);
+            throw new CarroException("O carro com o ID " + aluguel.getCarro().getId() + " ja está alugado.", e);
         } catch (Exception e) {
             LOGGER.error("Ocorreu um erro ao confirmar o aluguel com ID {}", id, e);
             throw new AluguelException("Ocorreu um erro ao confirmar o aluguel.", e);
@@ -148,7 +148,7 @@ public class AluguelService {
                 throw new AluguelNotConfirmedException(aluguelId);
             } else if (aluguel.isDeleted()) {
                 throw new AluguelNotFoundException(aluguelId);
-            } else if (!aluguel.getCar().isAlugado()) {
+            } else if (!aluguel.getCarro().isAlugado()) {
                 throw new CarroNotRentedException(aluguel.getCarro().getId());
             } else if (aluguel.getMotorista().getId() != motoristaId) {
                 throw new MotoristaNotAuthorizedException(motoristaId);
@@ -156,44 +156,44 @@ public class AluguelService {
 
             aluguel.setFinalizado(true);
             aluguel.setDataFinalizada(LocalDate.now());
-            aluguel.getCar().setAlugado(false);
+            aluguel.getCarro().setAlugado(false);
 
             return modelMapperResponse.mapModelToDto(aluguelRepository.save(aluguel), AluguelDtoResponse.class);
-        } catch (RentNotConfirmedException e) {
+        } catch (AluguelNotConfirmedException e) {
             LOGGER.error("Ocorreu um erro ao confirmar o aluguel com ID {}", aluguelId, e);
-            throw new RentException("O aluguel com o ID " + aluguelId + " nao foi confirmado.", e);
-        } catch (RentNotFoundException e) {
+            throw new AluguelException("O aluguel com o ID " + aluguelId + " nao foi confirmado.", e);
+        } catch (AluguelNotFoundException e) {
             LOGGER.error("Ocorreu um erro ao confirmar o aluguel com ID {}", aluguelId, e);
-            throw new RentException("O aluguel com o ID " + aluguelId + " nao foi encontrado.", e);
-        } catch (CarNotRentedException e) {
+            throw new AluguelException("O aluguel com o ID " + aluguelId + " nao foi encontrado.", e);
+        } catch (CarroNotRentedException e) {
             LOGGER.error("Ocorreu um erro ao confirmar o aluguel com ID {}", aluguelId, e);
-            throw new CarException("O carro com o ID " + aluguel.getCarro().getId() + " nao esta alugado.", e);
-        } catch (DriverNotAuthorizedException e) {
+            throw new CarroException("O carro com o ID " + aluguel.getCarro().getId() + " nao esta alugado.", e);
+        } catch (MotoristaNotAuthorizedException e) {
             LOGGER.error("Ocorreu um erro ao confirmar o aluguel com ID {}", motoristaId, e);
-            throw new DriverException("O motorista com o ID " + motoristaId + " nao esta autorizado.", e);
+            throw new MotoristaException("O motorista com o ID " + motoristaId + " nao esta autorizado.", e);
         } catch (Exception e) {
             LOGGER.error("Ocorreu um erro ao confirmar o aluguel com ID {}", aluguelId, e);
-            throw new RentException("Ocorreu um erro ao confirmar o aluguel.", e);
+            throw new AluguelException("Ocorreu um erro ao confirmar o aluguel.", e);
         }
     }
 
     public List<AluguelDtoResponse> findAlugueisAtivos(){
-        List<Rent> alugueisAtivos = aluguelRepository.findByNaoFinalizado();
+        List<Aluguel> alugueisAtivos = aluguelRepository.findByNaoFinalizado();
 
         try {
             return modelMapperResponse.mapList(alugueisAtivos, AluguelDtoResponse.class);
         } catch (Exception e) {
-            throw new RentException("Ocorreu um erro ao buscar alugueis ativos.", e);
+            throw new AluguelException("Ocorreu um erro ao buscar alugueis ativos.", e);
         }
     }
 
-    public List<RentDtoResponse> findAlugueisFinalizados() {
-        List<Rent> alugueisFinalizados = alugueisRepository.findByFinalizado();
+    public List<AluguelDtoResponse> findAlugueisFinalizados() {
+        List<Aluguel> alugueisFinalizados = aluguelRepository.findByFinalizado();
 
         try {
             return modelMapperResponse.mapList(alugueisFinalizados, AluguelDtoResponse.class);
         } catch (Exception e) {
-            throw new RentException("Ocorreu um erro ao buscar aluguéis finalizados.", e);
+            throw new AluguelException("Ocorreu um erro ao buscar aluguéis finalizados.", e);
         }
     }
 
@@ -201,19 +201,19 @@ public class AluguelService {
         try {
             LOGGER.info("Atualizando aluguel com ID: {}", payload.getId());
 
-            Aluguel aluguel = getAlugado(payload.getId());
+            Aluguel aluguel = getAluguel(payload.getId());
             if (aluguel.isConfirmado()) {
                 throw new Exception("Esse aluguel ja esta confirmado.");
-            } else if (rent.isDeleted()) {
+            } else if (aluguel.isDeleted()) {
                 throw new AluguelNotFoundException(payload.getId());
             }
 
             updateCampos(aluguel, payload);
 
-            return modelMapperResponse.mapModelToDto(rentRepository.save(aluguel), AluguelDtoResponse.class);
+            return modelMapperResponse.mapModelToDto(aluguelRepository.save(aluguel), AluguelDtoResponse.class);
         } catch (Exception e) {
             LOGGER.error("Ocorreu um erro ao atualizar o aluguel com ID: {}", payload.getId(), e);
-            throw new RentException("Ocorreu um erro ao atualizar o aluguel.", e);
+            throw new AluguelException("Ocorreu um erro ao atualizar o aluguel.", e);
         }
     }
 
@@ -227,14 +227,14 @@ public class AluguelService {
             aluguel.setDeleted(true);
             aluguel.getCarro().setAlugado(false);
 
-            rentRepository.save(aluguel);
+            aluguelRepository.save(aluguel);
         } catch (Exception e) {
             LOGGER.error("Ocorreu um erro ao excluir o aluguel com ID: {}", id, e);
-            throw new RentException("Ocorreu um erro ao excluir o aluguel.", e);
+            throw new AluguelException("Ocorreu um erro ao excluir o aluguel.", e);
         }
     }
 
-    private void aluguelCalculator(AluguelDto payload, BigDecimal valorDiario, BigDecimal valorFranquia) throws Exception {
+    private void calculoAluguel(AluguelDto payload, BigDecimal valorDiario, BigDecimal valorFranquia) throws Exception {
         long entreOsDias = ChronoUnit.DAYS.between(payload.getDataInicial(), payload.getDataFinal());
         entreOsDias = entreOsDias == 0 ? 1 : entreOsDias;
 
@@ -249,7 +249,7 @@ public class AluguelService {
     }
 
     private Aluguel getAluguel(Long id) {
-        return aluguelRepository.encontrarPeloId(id).orElseThrow(() -> new AluguelNotFoundException(id));
+        return aluguelRepository.findById(id).orElseThrow(() -> new AluguelNotFoundException(id));
     }
 
     private void updateCampos(Aluguel aluguel, AluguelDto payload) {

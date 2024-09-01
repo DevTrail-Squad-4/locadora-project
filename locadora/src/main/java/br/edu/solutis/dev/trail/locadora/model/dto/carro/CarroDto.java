@@ -32,7 +32,7 @@ public class CarroDto {
     @NotNull(message = "O valor diário é obrigatório")
     private BigDecimal dailyValue;
 
-    private boolean rented = false;
+    private boolean alugado = false;
 
     @NotNull(message = "Url da imagem é obrigatória")
     @NotBlank(message = "Url da imagem é obrigatória")

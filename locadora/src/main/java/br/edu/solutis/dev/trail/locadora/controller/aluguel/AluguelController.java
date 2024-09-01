@@ -2,7 +2,7 @@ package br.edu.solutis.dev.trail.locadora.controller.aluguel;
 
 import br.edu.solutis.dev.trail.locadora.exception.aluguel.AluguelException;
 import br.edu.solutis.dev.trail.locadora.exception.aluguel.AluguelNotFoundException;
-import br.edu.solutis.dev.trail.locadora.service.AluguelService;
+import br.edu.solutis.dev.trail.locadora.service.aluguel.AluguelService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

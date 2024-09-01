@@ -25,10 +25,10 @@ public class AluguelDto {
     @NotNull(message = "Concordacia à apolice de seguro requerida")
     private long apoliceSeguroId;
 
-    private long idMotorista;
+    private long motoristaId;
 
     @NotNull(message = "Necessita ter um carro escolhido")
     private long carroId;
 
-    private long carinhoId;
+    private long carrinhoId;
 }
