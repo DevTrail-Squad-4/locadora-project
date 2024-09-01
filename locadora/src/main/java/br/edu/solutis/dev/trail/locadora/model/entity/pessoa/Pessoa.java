@@ -56,15 +56,15 @@ public abstract class Pessoa {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", deleted=" + deleted +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", name='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", birthDate=" + aniversario +
-                ", gender=" + sexo +
+        return "Pessoa {" +
+                "id =" + id +
+                ", deletado =" + deleted +
+                ", criado =" + createdAt +
+                ", atualizaçao =" + updatedAt +
+                ", nome ='" + nome + '\'' +
+                ", cpf ='" + cpf + '\'' +
+                ", aniversario =" + aniversario +
+                ", sexo =" + sexo +
                 '}';
     }
 }
