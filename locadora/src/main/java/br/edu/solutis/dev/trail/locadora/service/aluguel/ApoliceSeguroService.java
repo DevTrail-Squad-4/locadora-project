@@ -1,13 +1,14 @@
-package br.edu.solutis.dev.trail.locadora.service;
+package br.edu.solutis.dev.trail.locadora.service.aluguel;
 
 
-
-import br.edu.solutis.dev.trail.locadora.exception.aluguel.insurace.ApoliceSeguroException;
-import br.edu.solutis.dev.trail.locadora.exception.aluguel.insurace.ApoliceSeguroNotFoundException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.apolice.ApoliceSeguroException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.apolice.ApoliceSeguroNotFoundException;
 import br.edu.solutis.dev.trail.locadora.mapper.GenericMapper;
 import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.ApoliceSeguroDto;
-import br.edu.solutis.dev.trail.locadora.model.entity.ApoliceSeguro;
+import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.ApoliceSeguro;
+import br.edu.solutis.dev.trail.locadora.repository.aluguel.ApoliceSeguroRepository;
 import br.edu.solutis.dev.trail.locadora.response.PageResponse;
+import br.edu.solutis.dev.trail.locadora.service.CrudService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ public class ApoliceSeguroService implements CrudService<ApoliceSeguroDto> {
             Page<ApoliceSeguro> apoliceSeguroPaginado = apoliceSeguroRepository.findByNaoDeletado(paginacao);
 
             List<ApoliceSeguroDto> apoliceSeguroDtos = modelMapper.
-                    mapList(ApoliceSeguroPaginado.getContent(), ApoliceSeguroDto.class);
+                    mapList(apoliceSeguroPaginado.getContent(), ApoliceSeguroDto.class);
 
             PageResponse<ApoliceSeguroDto> pageResponse = new PageResponse<>();
             pageResponse.setContent(apoliceSeguroDtos);
@@ -65,7 +66,7 @@ public class ApoliceSeguroService implements CrudService<ApoliceSeguroDto> {
             ApoliceSeguro apoliceSeguro = apoliceSeguroRepository
                     .save(modelMapper.mapDtoToModel(payload, ApoliceSeguro.class));
 
-            return modelMapper.mapModelToDto(apoliceSeguro, ApoliceSeguro.class);
+            return modelMapper.mapModelToDto(apoliceSeguro, ApoliceSeguroDto.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new ApoliceSeguroException("Ocorreu um erro ao adicionar a apólice de seguro.", e);
@@ -82,7 +83,7 @@ public class ApoliceSeguroService implements CrudService<ApoliceSeguroDto> {
             ApoliceSeguroDto apoliceSeguroDto = modelMapper
                     .mapModelToDto(apoliceSeguroExiste, ApoliceSeguroDto.class);
 
-            updateModelFields(payload, apoliceSeguroDto);
+            updateCamposDoModel(payload, apoliceSeguroDto);
 
             ApoliceSeguro apoliceSeguro = apoliceSeguroRepository
                     .save(modelMapper.mapDtoToModel(apoliceSeguroDto, ApoliceSeguro.class));
@@ -121,7 +122,7 @@ public class ApoliceSeguroService implements CrudService<ApoliceSeguroDto> {
     }
 
     private ApoliceSeguro getApoliceSeguro(Long id) {
-        return apoliceSeguroRepository.encontrarPeloId(id).orElseThrow(() -> {
+        return apoliceSeguroRepository.findById(id).orElseThrow(() -> {
             LOGGER.error("Apólice de seguro com ID {} não encontrada.", id);
             return new ApoliceSeguroNotFoundException(id);
         });

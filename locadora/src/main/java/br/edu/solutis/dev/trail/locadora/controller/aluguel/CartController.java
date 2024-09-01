@@ -68,7 +68,7 @@ public class CartController {
     public ResponseEntity<?> addAluguel(@PathVariable Long motoristaId, @RequestBody AluguelDto payload) {
         try {
             payload.setMotoristaId(motoristaId);
-            AluguelDto aluguelDto = AluguelService.add(payload);
+            AluguelDto aluguelDto = aluguelService.add(payload);
 
             carrinhoService.addAluguelToCarrinhoByMotoristaId(motoristaId, aluguelDto.getId());
 
@@ -95,7 +95,7 @@ public class CartController {
             return new ResponseEntity<>(carrinhoDto, HttpStatus.OK);
         } catch (AluguelNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (CarroException | RentException e) {
+        } catch (CarroException | AluguelException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (CarrinhoException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

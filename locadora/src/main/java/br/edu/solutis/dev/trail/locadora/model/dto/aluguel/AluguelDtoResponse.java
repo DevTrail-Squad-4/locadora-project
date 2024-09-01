@@ -1,4 +1,4 @@
-package br.edu.solutis.dev.trail.locadora.model.response;
+package br.edu.solutis.dev.trail.locadora.model.dto.aluguel;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
