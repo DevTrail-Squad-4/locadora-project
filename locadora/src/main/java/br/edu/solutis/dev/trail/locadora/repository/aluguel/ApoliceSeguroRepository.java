@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ApoliceSeguroRepository extends JpaRepository<ApoliceSeguro, Long> {
-    Page<ApoliceSeguro> findByDeletedFalse(Pageable pageable);
+    Page<ApoliceSeguro> findByNaoDeletado(Pageable pageable);
 }
 
 
