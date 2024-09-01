@@ -57,10 +57,10 @@ public class Acessorio {
     public String toString() {
         return "Acessorio{" +
                 "id=" + id +
-                ", description='" + description + '\'' +
-                ", deleted=" + deleted +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
+                ", descrição='" + description + '\'' +
+                ", excluido=" + deleted +
+                ", criadoEm=" + createdAt +
+                ", atualizadoEm=" + updatedAt +
                 '}';
     }
 }

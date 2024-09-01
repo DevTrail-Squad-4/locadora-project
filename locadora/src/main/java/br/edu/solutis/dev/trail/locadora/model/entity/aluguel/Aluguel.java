@@ -1,4 +1,4 @@
-package br.edu.solutis.dev.trail.locadora.model.entity;
+package br.edu.solutis.dev.trail.locadora.model.entity.aluguel;
 
 
 import br.edu.solutis.dev.trail.locadora.model.entity.Carro;

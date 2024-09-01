@@ -1,7 +1,8 @@
 package br.edu.solutis.dev.trail.locadora.model.entity.carro;
 
-//import br.com.solutis.locadora.model.entity.rent.Rent;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.Aluguel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -53,9 +54,9 @@ public class Carro {
     )
     private List<Acessorio> accessories;
 
-    //@JsonIgnoreProperties("cars")
-    //@OneToMany(mappedBy = "car")
-    //private List<Aluguel> rents;
+    @JsonIgnoreProperties("cars")
+    @OneToMany(mappedBy = "car")
+    private List<Aluguel> rents;
 
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
@@ -82,15 +83,15 @@ public class Carro {
     public String toString() {
         return "Carro{" +
                 "id=" + id +
-                ", plate='" + plate + '\'' +
-                ", chassis='" + chassis + '\'' +
-                ", color='" + color + '\'' +
-                ", dailyValue=" + dailyValue +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", rented=" + rented +
-                ", deleted=" + deleted +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
+                ", placa='" + plate + '\'' +
+                ", chassi='" + chassis + '\'' +
+                ", cor='" + color + '\'' +
+                ", valorDiario=" + dailyValue +
+                ", imagemUrl='" + imageUrl + '\'' +
+                ", alugado=" + rented +
+                ", excluido=" + deleted +
+                ", criadoEm=" + createdAt +
+                ", atualizadoEm=" + updatedAt +
                 '}';
     }
 }
