@@ -12,8 +12,8 @@ public class GenericMapper<S, T> {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.addConverter(new CarroParaCarroResponseDto());
-        modelMapper.addConverter(new ModeloParaModeloDtoResponse());
+        modelMapper.addConverter(new CarroToCarroDtoResponseConverter());
+        modelMapper.addConverter(new ModeloToModeloDtoResponse());
         //modelMapper.addConverter(new CartToCartDtoResponseConverter());
         //modelMapper.addConverter(new RentToRentDtoResponseConverter());
         return modelMapper;
