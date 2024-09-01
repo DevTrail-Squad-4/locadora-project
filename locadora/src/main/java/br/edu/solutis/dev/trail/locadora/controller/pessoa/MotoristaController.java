@@ -6,6 +6,8 @@ import br.com.solutis.locadora.model.dto.person.DriverDto;
 import br.com.solutis.locadora.response.ErrorResponse;
 import br.com.solutis.locadora.service.person.DriverService;
 import br.com.solutis.locadora.service.rent.CartService;
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaException;
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaNotFoundException;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.MotoristaDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
