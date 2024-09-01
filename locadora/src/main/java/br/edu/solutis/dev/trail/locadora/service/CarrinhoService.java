@@ -58,7 +58,7 @@ public class CarrinhoService {
         return modelMapperResponse.mapModelToDto(carrinho, CarrinhoDtoResponse.class);
     }
 
-    public PageResponse<CartDtoResponse> encontrarTodos(int numeroPagina, int tamanhoPagina) {
+    public PageResponse<CarrinhoDtoResponse> encontrarTodos(int numeroPagina, int tamanhoPagina) {
         try {
             LOGGER.info("Buscando carrinhos com número da página {} e tamanho da página {}.", numeroPagina, tamanhoPagina);
 
@@ -197,7 +197,7 @@ public class CarrinhoService {
         }
     }
 
-    public CarrinhoDtoResponse removerAluguelDoCarrinhoPeloIdMotorista(long motoristaId, long aluguelId) {
+    public CarrinhoDtoResponse removeAluguelFromCarrinhoByMotoristaId(long motoristaId, long aluguelId) {
         try {
             LOGGER.info("Removendo aluguel com ID {} do carrinho com ID do motorista: {}", aluguelId, motoristaId);
 

@@ -10,6 +10,7 @@ import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.CarrinhotDtoResponse;
 import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.AluguelDto;
 import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.AluguelDtoResponse;
 import br.edu.solutis.dev.trail.locadora.response.ErrorResponse;
+import br.edu.solutis.dev.trail.locadora.service.CarrinhoService;
 import br.edu.solutis.dev.trail.locadora.service.rent.CartService;
 import br.edu.solutis.dev.trail.locadora.service.rent.RentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,13 +33,13 @@ public class CartController {
             summary = "Lista o carrinho de um motorista",
             description = "Retorna as informações do carrinho do motorista"
     )
-    @GetMapping("/{driverId}")
-    public ResponseEntity<?> encontrarCarrinhoPorMotoristaId(@PathVariable Long motoristaId) {
+    @GetMapping("/{motoristaId}")
+    public ResponseEntity<?> findCarrinhoByMotoristaId(@PathVariable Long motoristaId) {
         try {
-            return new ResponseEntity<>(carrinhoService.findByDriverId(motoristaId), HttpStatus.OK);
+            return new ResponseEntity<>(carrinhoService.encontrarPeloIdMotorista(motoristaId), HttpStatus.OK);
         } catch (CarrinhoNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (CartException e) {
+        } catch (CarrinhoException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -48,13 +49,13 @@ public class CartController {
             description = "Retorna as informações de todos os carrinhos"
     )
     @GetMapping
-    public ResponseEntity<?> encontrarTodosCarrinhos(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size
+    public ResponseEntity<?> findAllCarrinhos(
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "3") int tamanho
     ) {
         try {
-            return new ResponseEntity<>(carrinhoService.findAll(page, size), HttpStatus.OK);
-        } catch (CartException e) {
+            return new ResponseEntity<>(carrinhoService.findAll(pagina, tamanho), HttpStatus.OK);
+        } catch (CarrinhoException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -63,20 +64,20 @@ public class CartController {
             summary = "Criando o aluguel",
             description = "Retorna as informações do carrinho"
     )
-    @PostMapping("/{driverId}/rents")
-    public ResponseEntity<?> addRent(@PathVariable Long driverId, @RequestBody RentDto payload) {
+    @PostMapping("/{motoristaId}/alugueis")
+    public ResponseEntity<?> addAluguel(@PathVariable Long motoristaId, @RequestBody AluguelDto payload) {
         try {
-            payload.setDriverId(driverId);
-            RentDto rentDto = rentService.add(payload);
+            payload.setMotoristaId(motoristaId);
+            AluguelDto aluguelDto = AluguelService.add(payload);
 
-            cartService.addRentToCartByDriverId(driverId, rentDto.getId());
+            carrinhoService.addAluguelToCarrinhoByMotoristaId(motoristaId, aluguelDto.getId());
 
-            return new ResponseEntity<>(rentDto, HttpStatus.OK);
-        } catch (CarException e) {
+            return new ResponseEntity<>(aluguelDto, HttpStatus.OK);
+        } catch (CarroException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-        } catch (CartNotFoundException e) {
+        } catch (CarrinhoNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (CartException e) {
+        } catch (CarrinhoException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -85,18 +86,18 @@ public class CartController {
             summary = "Confirma o aluguel do carrinho",
             description = "Retorna as informações do carrinho"
     )
-    @PostMapping("/{driverId}/rents/{rentId}/confirm")
-    public ResponseEntity<?> confirmRentFromCart(@PathVariable Long driverId, @PathVariable Long rentId) {
+    @PostMapping("/{motoristaId}/alugueis/{aluguelId}/confirm")
+    public ResponseEntity<?> confirmAluguelFromCarrinho(@PathVariable Long motoristaId, @PathVariable Long aluguelId) {
         try {
-            rentService.confirmRent(rentId);
-            CartDtoResponse cartDto = cartService.removeRentFromCartByDriverId(driverId, rentId);
+            aluguelService.confirmAluguel(aluguelId);
+            CarrinhoDtoResponse carrinhoDto = carrinhoService.removeAluguelFromCarrinhoByMotoristaId(motoristaId, aluguelId);
 
-            return new ResponseEntity<>(cartDto, HttpStatus.OK);
-        } catch (RentNotFoundException e) {
+            return new ResponseEntity<>(carrinhoDto, HttpStatus.OK);
+        } catch (AluguelNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (CarException | RentException e) {
+        } catch (CarroException | RentException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-        } catch (CartException e) {
+        } catch (CarrinhoException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -105,16 +106,16 @@ public class CartController {
             summary = "Apaga o aluguel do carrinho",
             description = "Retorna o codigo 204 (No Content)"
     )
-    @DeleteMapping("/{driverId}/rents/{rentId}")
-    public ResponseEntity<?> deleteRentFromCart(@PathVariable Long driverId, @PathVariable Long rentId) {
+    @DeleteMapping("/{motoristaId}/alugueis/{aluguelId}")
+    public ResponseEntity<?> deleteAluguelFromCarrinho(@PathVariable Long motoristaId, @PathVariable Long aluguelId) {
         try {
-            cartService.removeRentFromCartByDriverId(driverId, rentId);
-            rentService.deleteById(rentId);
+            carrinhoService.removeAluguelFromCarrinhoByMotoristaId(motoristaId, aluguelId);
+            aluguelService.deleteById(aluguelId);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (CartNotFoundException e) {
+        } catch (CarrinhoNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (CartException e) {
+        } catch (CarrinhoException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
