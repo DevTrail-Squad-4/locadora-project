@@ -60,7 +60,7 @@ public class ApoliceSeguro {
 
     @Override
     public String toString() {
-        return "InsurancePolicy{" +
+        return "ApoliceSeguro{" +
                 "id=" + id +
                 ", franchiseValue=" + valorFranquia +
                 ", thirdPartyCoverage=" + protecaoTerceiro +
