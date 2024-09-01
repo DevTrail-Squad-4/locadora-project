@@ -1,5 +1,6 @@
 package br.com.solutis.locadora.service.person;
 
+import br.edu.solutis.dev.trail.locadora.mapper.GenericMapper;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.MotoristaDTO;
 import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.MotoristaEntity;
 import br.edu.solutis.dev.trail.locadora.repository.pessoa.MotoristaRepository;
