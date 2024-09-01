@@ -7,7 +7,7 @@ import org.modelmapper.AbstractConverter;
 
 
 
-public class CarroParaCarroResponseDto extends AbstractConverter<Carro, CarroDtoResponse> {
+public class CarroToCarroDtoResponseConverter extends AbstractConverter<Carro, CarroDtoResponse> {
     @Override
     protected CarroDtoResponse convert(Carro car) {
         CarroDtoResponse CarroDtoResponse = new CarroDtoResponse();

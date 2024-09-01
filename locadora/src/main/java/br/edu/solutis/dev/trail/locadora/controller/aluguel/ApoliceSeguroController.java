@@ -29,7 +29,7 @@ public class ApoliceSeguroController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(ApoliceSeguroService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(apoliceSeguroService.findById(id), HttpStatus.OK);
         } catch (ApoliceSeguroNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (ApoliceSeguroException e) {
@@ -47,7 +47,7 @@ public class ApoliceSeguroController {
             @RequestParam(defaultValue = "3") int tamanho
     ) {
         try {
-            return new ResponseEntity<>(ApoliceSeguroService.findAll(pagina, tamanho), HttpStatus.OK);
+            return new ResponseEntity<>(apoliceSeguroService.findAll(pagina, tamanho), HttpStatus.OK);
         } catch (ApoliceSeguroException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -60,7 +60,7 @@ public class ApoliceSeguroController {
     @PostMapping
     public ResponseEntity<?> add(@RequestBody ApoliceSeguroDto payload) {
         try {
-            return new ResponseEntity<>(ApoliceSeguroService.add(payload), HttpStatus.CREATED);
+            return new ResponseEntity<>(apoliceSeguroService.add(payload), HttpStatus.CREATED);
         } catch (ApoliceSeguroException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -73,7 +73,7 @@ public class ApoliceSeguroController {
     @PutMapping
     public ResponseEntity<?> update(@RequestBody ApoliceSeguroDto payload) {
         try {
-            return new ResponseEntity<>(ApoliceSeguroService.update(payload), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(apoliceSeguroService.update(payload), HttpStatus.NO_CONTENT);
         } catch (ApoliceSeguroNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (ApoliceSeguroException e) {
@@ -88,7 +88,7 @@ public class ApoliceSeguroController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         try {
-            ApoliceSeguroService.deleteById(id);
+            apoliceSeguroService.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (ApoliceSeguroNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);

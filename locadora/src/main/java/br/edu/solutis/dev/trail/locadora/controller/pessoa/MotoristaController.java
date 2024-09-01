@@ -4,6 +4,7 @@ import br.edu.solutis.dev.trail.locadora.response.ErrorResponse;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaException;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaNotFoundException;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.MotoristaDTO;
+import br.edu.solutis.dev.trail.locadora.service.aluguel.CarrinhoService;
 import br.edu.solutis.dev.trail.locadora.service.pessoa.MotoristaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -59,7 +60,7 @@ public class MotoristaController {
     @PostMapping
     public ResponseEntity<?> add(@RequestBody MotoristaDTO payload) {
         try {
-            MotoristaDTO driverDto = MotoristaService.add(payload);
+            MotoristaDTO driverDto = motoristaService.add(payload);
 
             carrinhoService.addByMotoristaId(driverDto.getId());
 

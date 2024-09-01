@@ -1,4 +1,5 @@
 package br.edu.solutis.dev.trail.locadora.model.entity.pessoa;
+
 import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.Carrinho;
 import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.Aluguel;
 
@@ -10,7 +11,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+
 import java.util.List;
+
 
 
 @Table(name = "motoristas")
@@ -31,6 +34,7 @@ public class Motorista  extends Pessoa{
     @JsonIgnoreProperties("motoristas")
     @OneToOne(mappedBy = "motorista")
     private Carrinho carrinho;
+
 
     @Override
     public String toString() {
