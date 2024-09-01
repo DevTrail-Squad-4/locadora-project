@@ -1,4 +1,4 @@
-package br.com.solutis.locadora.service.person;
+package br.edu.solutis.dev.trail.locadora.service.pessoa;
 
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaException;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaNotFoundException;

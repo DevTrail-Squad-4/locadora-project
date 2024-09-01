@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "DriverController")
+@Tag(name = "MotoristaController")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/motoristas")
