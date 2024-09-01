@@ -1,6 +1,6 @@
-package br.com.solutis.locadora.model.dto.car;
+package br.edu.solutis.dev.trail.locadora.model.dto.carro;
 
-import br.com.solutis.locadora.model.entity.car.ModelCategoryEnum;
+import br.edu.solutis.dev.trail.locadora.model.enums.ModeloCategoriaEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -9,8 +9,8 @@ import lombok.EqualsAndHashCode;
 public class ModeloDtoResponse {
 
     private Long id;
-    private String modelo;
-    private ModelCategoryEnum categoria;
-    private String fabricante;
+    private String model;
+    private ModeloCategoriaEnum category;
+    private String manufacturer;
 
 }

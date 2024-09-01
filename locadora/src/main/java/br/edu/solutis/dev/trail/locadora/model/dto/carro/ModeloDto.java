@@ -1,6 +1,6 @@
-package br.com.solutis.locadora.model.dto.car;
+package br.edu.solutis.dev.trail.locadora.model.dto.carro;
 
-import br.com.solutis.locadora.model.entity.car.ModelCategoryEnum;
+import br.edu.solutis.dev.trail.locadora.model.enums.ModeloCategoriaEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -14,14 +14,15 @@ import lombok.EqualsAndHashCode;
 public class ModeloDto {
     private Long id;
 
-    @NotNull(message = "A descrição é obrigatória")
-    @NotBlank(message = "A descrição é obrigatória")
-    @Size(min = 1, max = 255, message = "A descrição deve ter entre 1 e 255 caracteres")
-    private String descrição;
+    @NotNull(message = "Description is required")
+    @NotBlank(message = "Description is required")
+    @Size(min = 1, max = 255, message = "Description must be between 1 and 255 characters long")
+    private String description;
 
-    @NotNull(message = "A descrição é obrigatória")
+    @NotNull(message = "Category is required")
     @Enumerated(EnumType.STRING)
-    private ModelCategoryEnum categoria;
+    private ModeloCategoriaEnum category;
 
-    @NotNull(message = "O fabricante é obrigatório")
-    private Long fabricante;
+    @NotNull(message = "Manufacturer is required")
+    private Long manufacturerId;
+}
