@@ -23,7 +23,7 @@ public class AluguelDto {
     private BigDecimal valor;
 
     @NotNull(message = "Concordacia à apolice de seguro requerida")
-    private long idApoliceSeguro;
+    private long apoliceSeguroId;
 
     private long idMotorista;
 

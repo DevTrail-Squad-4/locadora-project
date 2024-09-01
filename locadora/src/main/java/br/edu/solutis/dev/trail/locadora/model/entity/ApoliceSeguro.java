@@ -62,10 +62,10 @@ public class ApoliceSeguro {
     public String toString() {
         return "ApoliceSeguro{" +
                 "id=" + id +
-                ", franchiseValue=" + valorFranquia +
-                ", thirdPartyCoverage=" + protecaoTerceiro +
-                ", naturalPhenomenaCoverage=" + protecaoCausasNaturais +
-                ", theftCoverage=" + protecaoRoubo +
+                ", valorFranduia=" + valorFranquia +
+                ", protecaoTerceiro=" + protecaoTerceiro +
+                ", protecaoCausasNaturais=" + protecaoCausasNaturais +
+                ", protecaoRoubo=" + protecaoRoubo +
                 ", deleted=" + deleted +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +

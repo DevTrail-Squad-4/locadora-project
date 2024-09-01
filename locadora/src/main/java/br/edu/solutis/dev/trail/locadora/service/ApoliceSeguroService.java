@@ -29,19 +29,19 @@ public class ApoliceSeguroService implements CrudService<ApoliceSeguroDto> {
     private final ApoliceSeguroRepository apoliceSeguroRepository;
     private final GenericMapper<ApoliceSeguroDto, ApoliceSeguro> modelMapper;
 
-    public ApoliceSeguroDto encontrarPeloId(Long id) {
+    public ApoliceSeguroDto findById(Long id) {
         LOGGER.info("Buscando apólice de seguro com ID: {}", id);
         ApoliceSeguro apoliceSeguro = getApoliceSeguro(id);
 
         return modelMapper.mapModelToDto(apoliceSeguro, ApoliceSeguroDto.class);
     }
 
-    public PageResponse<ApoliceSeguroDto> encontrarTodos(int numeroPagina, int tamanhoPagina) {
+    public PageResponse<ApoliceSeguroDto> findAll(int numeroPagina, int tamanhoPagina) {
         try {
             LOGGER.info("Buscando apólices de seguro com número da página {} e tamanho da página {}.", numeroPagina, tamanhoPagina);
 
             Pageable paginacao = PageRequest.of(numeroPagina, tamanhoPagina);
-            Page<ApoliceSeguro> apoliceSeguroPaginado = apoliceSeguroRepository.encontrarPeloNaoDeletado(paginacao);
+            Page<ApoliceSeguro> apoliceSeguroPaginado = apoliceSeguroRepository.findByNaoDeletado(paginacao);
 
             List<ApoliceSeguroDto> apoliceSeguroDtos = modelMapper.
                     mapList(ApoliceSeguroPaginado.getContent(), ApoliceSeguroDto.class);
@@ -75,7 +75,7 @@ public class ApoliceSeguroService implements CrudService<ApoliceSeguroDto> {
 
     public ApoliceSeguroDto update(ApoliceSeguroDto payload) {
         ApoliceSeguro apoliceSeguroExiste = getApoliceSeguro(payload.getId());
-        if (apoliceSeguroExiste.isDeletado())
+        if (apoliceSeguroExiste.isDeleted())
             throw new ApoliceSeguroNotFoundException(apoliceSeguroExiste.getId());
 
         try {
@@ -96,13 +96,13 @@ public class ApoliceSeguroService implements CrudService<ApoliceSeguroDto> {
     }
 
     public void deleteById(Long id) {
-        ApoliceSeguroDto apoliceSeguroDto = encontrarPeloId(id);
+        ApoliceSeguroDto apoliceSeguroDto = findById(id);
 
         try {
             LOGGER.info("Excluindo a apólice de seguro com ID: {}", id);
 
             ApoliceSeguro apoliceSeguro = modelMapper.mapDtoToModel(apoliceSeguroDto, ApoliceSeguro.class);
-            apoliceSeguro.setDeletado(true);
+            apoliceSeguro.setDeleted(true);
 
             apoliceSeguroRepository.save(apoliceSeguro);
         } catch (Exception e) {
@@ -111,7 +111,7 @@ public class ApoliceSeguroService implements CrudService<ApoliceSeguroDto> {
         }
     }
 
-    private void updateModelFields(ApoliceSeguroDto payload, ApoliceSeguroDto apoliceSeguroExiste) {
+    private void updateCamposDoModel(ApoliceSeguroDto payload, ApoliceSeguroDto apoliceSeguroExiste) {
         if (payload.getValorFranquia() != null) {
             apoliceSeguroExiste.setValorFranquia(payload.getValorFranquia());
         }
