@@ -1,4 +1,4 @@
-package br.edu.solutis.dev.trail.locadora.model.entity;
+package br.edu.solutis.dev.trail.locadora.model.entity.pessoa;
 
 import br.edu.solutis.dev.trail.locadora.model.enums.SexoEnum;
 import jakarta.persistence.*;
