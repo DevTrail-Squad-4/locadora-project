@@ -45,7 +45,7 @@ public class CarroService  {
             LOGGER.info("Buscando carros com número de página {} e tamanho de página {}.", pageNo, pageSize);
 
             Pageable paging = PageRequest.of(pageNo, pageSize);
-            Page<Carro> pagedCars = carRepository.findByDeletedFalseAndRentedFalse(paging);
+            Page<Carro> pagedCars = carRepository.findByDeletedFalseAndAlugadoFalse(paging);
             List<CarroDtoResponse> carDtos = modelMapperResponse.mapList(pagedCars.getContent(),CarroDtoResponse.class);
 
             PageResponse<CarroDtoResponse> pageResponse = new PageResponse<>();

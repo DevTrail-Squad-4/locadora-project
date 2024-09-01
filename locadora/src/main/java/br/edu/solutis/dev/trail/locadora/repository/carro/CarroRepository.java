@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository
 public interface CarroRepository extends JpaRepository<Carro, Long> {
-    Page<Carro> findByDeletedFalseAndRentedFalse(Pageable pageable);
+    Page<Carro> findByDeletedFalseAndAlugadoFalse(Pageable pageable);
 
     @Query("SELECT DISTINCT c FROM Car c " +
             "LEFT JOIN c.rents r " +
