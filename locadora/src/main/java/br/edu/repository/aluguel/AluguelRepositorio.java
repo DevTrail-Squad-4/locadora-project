@@ -11,9 +11,9 @@ import java.util.List;
 
 @Repository
 
-public class AluguelRepositorio extends JpaRepository<Rent, Long> {
-    List<Rent> findByFinishedTrue();
-    List<Rent> findByFinishedFalse();
+public class AluguelRepositorio extends JpaRepository<Aluguel, Long> {
+    List<Aluguel> findByFinishedTrue();
+    List<Aluguel> findByFinishedFalse();
 
 }
 

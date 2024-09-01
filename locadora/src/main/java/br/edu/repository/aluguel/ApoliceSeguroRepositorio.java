@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class SeguroPoliticaRepositorio extends JpaRepository<InsurancePolicy, Long> {
+public class ApoliceSeguroRepositorio extends JpaRepository<InsurancePolicy, Long> {
     Page<InsurancePolicy> findByDeletedFalse(Pageable pageable);
 }
 
