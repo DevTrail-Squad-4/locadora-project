@@ -1,11 +1,10 @@
 package br.edu.solutis.dev.trail.locadora.controller.pessoa;
 
-import br.com.solutis.locadora.service.person.MotoristaService;
 import br.edu.solutis.dev.trail.locadora.response.ErrorResponse;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaException;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaNotFoundException;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.MotoristaDTO;
-import br.edu.solutis.dev.trail.locadora.service.carro.CarroService;
+import br.edu.solutis.dev.trail.locadora.service.pessoa.MotoristaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

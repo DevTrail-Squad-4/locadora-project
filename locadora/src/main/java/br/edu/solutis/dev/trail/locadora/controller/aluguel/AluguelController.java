@@ -1,11 +1,13 @@
-package br.com.solutis.locadora.controller.rent;
+package br.edu.solutis.dev.trail.locadora.controller.aluguel;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "RentController")
+@Tag(name = "AluguelController")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/alugueis")

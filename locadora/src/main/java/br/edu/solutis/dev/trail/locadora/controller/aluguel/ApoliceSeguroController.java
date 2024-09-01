@@ -1,10 +1,6 @@
-package br.com.solutis.locadora.controller.rent;
+package br.edu.solutis.dev.trail.locadora.controller.aluguel;
 
-import br.com.solutis.locadora.exception.rent.insurace.InsurancePolicyException;
-import br.com.solutis.locadora.exception.rent.insurace.InsurancePolicyNotFoundException;
-import br.com.solutis.locadora.model.dto.rent.InsurancePolicyDto;
-import br.com.solutis.locadora.response.ErrorResponse;
-import br.com.solutis.locadora.service.rent.InsurancePolicyService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@Tag(name = "InsurancePolicyController")
+@Tag(name = "ApoliceSeguroController")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/seguros")
 @CrossOrigin
 public class ApoliceSeguroController {
-    private final ApoliceSeguroService ApoliceSeguroService;
+    private final ApoliceSeguroService apoliceSeguroService;
 
     @Operation(
             summary = "Listar por id",
@@ -29,9 +25,9 @@ public class ApoliceSeguroController {
     public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(ApoliceSeguroService.findById(id), HttpStatus.OK);
-        } catch (InsurancePolicyNotFoundException e) {
+        } catch (ApoliceSeguroNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (InsurancePolicyException e) {
+        } catch (ApoliceSeguroException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -47,7 +43,7 @@ public class ApoliceSeguroController {
     ) {
         try {
             return new ResponseEntity<>(ApoliceSeguroService.findAll(pagina, tamanho), HttpStatus.OK);
-        } catch (InsurancePolicyException e) {
+        } catch (ApoliceSeguroException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -60,7 +56,7 @@ public class ApoliceSeguroController {
     public ResponseEntity<?> add(@RequestBody ApoliceSeguroDto payload) {
         try {
             return new ResponseEntity<>(ApoliceSeguroService.add(payload), HttpStatus.CREATED);
-        } catch (InsurancePolicyException e) {
+        } catch (ApoliceSeguroException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -73,9 +69,9 @@ public class ApoliceSeguroController {
     public ResponseEntity<?> update(@RequestBody ApoliceSeguroDto payload) {
         try {
             return new ResponseEntity<>(ApoliceSeguroService.update(payload), HttpStatus.NO_CONTENT);
-        } catch (InsurancePolicyNotFoundException e) {
+        } catch (ApoliceSeguroNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (InsurancePolicyException e) {
+        } catch (ApoliceSeguroException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -89,9 +85,9 @@ public class ApoliceSeguroController {
         try {
             ApoliceSeguroService.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (InsurancePolicyNotFoundException e) {
+        } catch (ApoliceSeguroNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (InsurancePolicyException e) {
+        } catch (ApoliceSeguroException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
