@@ -22,9 +22,9 @@ public interface CarroRepository extends JpaRepository<Carro, Long> {
             "WHERE (:alugado IS NULL OR c.alugado = :alugado) " +
             "AND (:acessorio IS NULL OR :acessorio MEMBER OF c.acessorios) " +
             "AND (c.deleted = false) " +
-            "AND (:categoria IS NULL OR c.model.categoria = :categoria) " +
+            "AND (:categoria IS NULL OR c.modelo.categoria = :categoria) " +
             "AND ((:alugado = true) OR (c.alugado = false))"+
-            "AND (:modelo IS NULL OR c.modelo.description = :modelo)")
+            "AND (:modelo IS NULL OR c.modelo.descricao = :modelo)")
 
     List<Carro> findCarrosByFilters(
             @Param("categoria") ModeloCategoriaEnum categoria,

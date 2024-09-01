@@ -22,8 +22,8 @@ public class CarroToCarroDtoResponseConverter extends AbstractConverter<Carro, C
         CarroDtoResponse.setAccessories(car.getAcessorios());
 
         if (car.getModelo() != null) {
-            CarroDtoResponse.setDescription(car.getModelo() .getDescription());
-            CarroDtoResponse.setCategory(car.getModelo() .getCategory());
+            CarroDtoResponse.setDescription(car.getModelo().getDescricao());
+            CarroDtoResponse.setCategory(car.getModelo().getCategoria());
             if (car.getModelo() .getFabricante() != null) {
                 CarroDtoResponse.setName(car.getModelo() .getFabricante().getName());
             }

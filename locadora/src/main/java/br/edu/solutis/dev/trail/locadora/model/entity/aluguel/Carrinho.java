@@ -29,7 +29,7 @@ public class Carrinho {
 
     @JsonIgnoreProperties("carrinhos")
     @OneToMany(mappedBy = "carrinho", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Aluguel> aluguels;
+    private List<Aluguel> alugueis;
 
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
