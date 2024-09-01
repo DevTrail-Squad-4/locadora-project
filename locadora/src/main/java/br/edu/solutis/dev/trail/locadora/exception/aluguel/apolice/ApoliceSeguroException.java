@@ -1,4 +1,4 @@
-package br.edu.solutis.dev.trail.locadora.exception.aluguel.insurace;
+package br.edu.solutis.dev.trail.locadora.exception.aluguel.apolice;
 
 
 public class ApoliceSeguroException extends RuntimeException {
