@@ -22,8 +22,8 @@ public class Fabricante {
     @Column(unique = true,name = "name", nullable = false)
     private String name;
 
-    @JsonIgnoreProperties("manufacturer")
-    @OneToMany(mappedBy = "manufacturer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("fabricante")
+    @OneToMany(mappedBy = "fabricante", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Modelo> models;
 
     @Column(name = "deleted", nullable = false)
