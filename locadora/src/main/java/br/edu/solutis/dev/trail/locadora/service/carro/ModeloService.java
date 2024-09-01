@@ -7,7 +7,7 @@ import br.edu.solutis.dev.trail.locadora.response.PageResponse;
 import br.edu.solutis.dev.trail.locadora.model.dto.carro.ModeloDto;
 import br.edu.solutis.dev.trail.locadora.model.dto.carro.ModeloDtoResponse;
 import br.edu.solutis.dev.trail.locadora.model.entity.carro.Modelo;
-import br.edu.solutis.dev.trail.locadora.repository.ModeloRepository;
+import br.edu.solutis.dev.trail.locadora.repository.carro.ModeloRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class ModeloService {
     private final GenericMapper<ModeloDtoResponse, Modelo> modelMapperResponse;
 
     public ModeloDtoResponse findById(Long id) {
-        LOGGER.info("Finding model with ID: {}", id);
+        LOGGER.info("Encontrando modelo com ID {}", id);
         Modelo model = getModel(id);
 
         return modelMapperResponse.mapModelToDto(model, ModeloDtoResponse.class);
@@ -38,7 +38,7 @@ public class ModeloService {
 
     public PageResponse<ModeloDtoResponse> findAll(int pageNo, int pageSize) {
         try {
-            LOGGER.info("Fetching models with page number {} and page size {}.", pageNo, pageSize);
+            LOGGER.info("Buscando modelos com número de página {} e tamanho de página {}.", pageNo, pageSize);
 
             Pageable paging = PageRequest.of(pageNo, pageSize);
             Page<Modelo> pagedModels = modelRepository.findByDeletedFalse(paging);
@@ -55,7 +55,7 @@ public class ModeloService {
             return pageResponse;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new ModeloException("An error occurred while fetching models.", e);
+            throw new ModeloException("Ocorreu um erro ao buscar modelos.", e);
         }
     }
 
@@ -68,7 +68,7 @@ public class ModeloService {
             return modelMapper.mapModelToDto(model, ModeloDto.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new ModeloException("An error occurred while adding the car model", e);
+            throw new ModeloException("Ocorreu um erro ao adicionar o modelo do carro", e);
         }
     }
 
@@ -89,14 +89,14 @@ public class ModeloService {
             return modelMapperResponse.mapModelToDto(model, ModeloDtoResponse.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new ModeloException("An error occurred while updating the car model.", e);
+            throw new ModeloException("Ocorreu um erro ao atualizar o modelo do carro.", e);
         }
     }
 
     public void deleteById(Long id) {
         Modelo model = getModel(id);
         try {
-            LOGGER.info("Soft deleting model with ID {}", id);
+            LOGGER.info("Modelo de exclusão reversível com ID {}", id);
 
 
             model.setDeleted(true);
@@ -104,7 +104,7 @@ public class ModeloService {
             modelRepository.save(model);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new ModeloException("An error occurred while deleting the car model", e);
+            throw new ModeloException("Ocorreu um erro ao excluir o modelo do carro", e);
         }
     }
 
@@ -122,7 +122,7 @@ public class ModeloService {
 
     private Modelo getModel(Long id) {
         return modelRepository.findById(id).orElseThrow(() -> {
-            LOGGER.error("Model with ID {} not found.", id);
+            LOGGER.error("Modelo com ID {} não encontrado.", id);
             return new ModeloNotFoundException(id);
         });
     }
