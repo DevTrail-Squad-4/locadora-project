@@ -64,7 +64,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
             LOGGER.info("Adicionando funcionario: {}", payload);
 
             FuncionarioEntity funcionario = employeeRepository
-                    .save(modelMapper.mapDtoToModel(payload, funcionario.class));
+                    .save(modelMapper.mapDtoToModel(payload, FuncionarioEntity.class));
 
             return modelMapper.mapModelToDto(funcionario, FuncionarioDTO.class);
         } catch (Exception e) {
@@ -80,12 +80,12 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
         try {
             LOGGER.info("Editando funcionario: {}", payload);
             FuncionarioDTO funcionarioDTO = modelMapper
-                    .mapModelToDto(existingEmployee, funcionarioDTO.class);
+                    .mapModelToDto(existingEmployee, FuncionarioDTO.class);
 
             updateEmployeeFields(payload, funcionarioDTO);
 
             FuncionarioEntity funcionario = employeeRepository
-                    .save(modelMapper.mapDtoToModel(funcionarioDTO, funcionario.class));
+                    .save(modelMapper.mapDtoToModel(funcionarioDTO, FuncionarioEntity.class));
 
             return modelMapper.mapModelToDto(funcionario, FuncionarioDTO.class);
 
@@ -101,7 +101,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
         try {
             LOGGER.info("Soft deleting Employee with ID: {}", id);
 
-            FuncionarioEntity funcionario = modelMapper.mapDtoToModel(funcionarioDTO, funcionario.class);
+            FuncionarioEntity funcionario = modelMapper.mapDtoToModel(funcionarioDTO, FuncionarioEntity.class);
             funcionario.setDeleted(true);
 
             employeeRepository.save(funcionario);

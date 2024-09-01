@@ -116,7 +116,7 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
         if (payload.getNome() != null) {
             existingDriver.setNome(payload.getNome());
         }
-        if (payload.getCNH() != null) {
+        if (payload.getCnh() != null) {
             existingDriver.setCnh(payload.getCnh());
         }
         if (payload.getAniversario() != null) {
