@@ -16,8 +16,8 @@ public class CarroToCarroDtoResponseConverter extends AbstractConverter<Carro, C
         CarroDtoResponse.setColor(car.getColor());
         CarroDtoResponse.setPlate(car.getPlate());
         CarroDtoResponse.setChassis(car.getChassis());
-        CarroDtoResponse.setDailyValue(car.getDailyValue());
-        CarroDtoResponse.setRented(car.isRented());
+        CarroDtoResponse.setDailyValue(car.getValorDiario());
+        CarroDtoResponse.setRented(car.isAlugado());
 
         CarroDtoResponse.setAccessories(car.getAccessories());
 

@@ -138,7 +138,7 @@ public class AluguelService {
         }
     }
         
-    public AluguelDtoResponse finishedAluguel(long motoristaId, long aluguelId) {
+    public AluguelDtoResponse finishAluguel(long motoristaId, long aluguelId) {
         LOGGER.info("Finalizando aluguel com ID: {}", aluguelId);
 
         Aluguel aluguel = getAluguel(aluguelId);
@@ -217,7 +217,7 @@ public class AluguelService {
         }
     }
 
-    public void deleteByID(Long id) {
+    public void deleteById(Long id) {
         LOGGER.info("Excluindo aluguel com ID: {}", id);
 
         Aluguel aluguel = getAluguel(id);
