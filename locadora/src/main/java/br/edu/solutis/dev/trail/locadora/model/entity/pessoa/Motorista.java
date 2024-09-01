@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class MotoristaEntity  extends Pessoa{
+public class Motorista extends Pessoa{
     @Column(unique = true, nullable = false)
     private String cnh;
 
