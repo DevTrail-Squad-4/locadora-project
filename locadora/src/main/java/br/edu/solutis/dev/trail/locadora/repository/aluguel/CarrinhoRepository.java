@@ -11,6 +11,6 @@ public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
 
     Page<Carrinho> findByDeletedFalse(Pageable pageable);
 
-    Carrinho findByDriverId(Long driverId);
+    Carrinho findbyMotoristaId(Long driverId);
 
 }

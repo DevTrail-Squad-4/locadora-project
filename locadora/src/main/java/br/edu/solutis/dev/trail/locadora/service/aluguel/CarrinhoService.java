@@ -1,18 +1,18 @@
 package br.edu.solutis.dev.trail.locadora.service.aluguel;
 
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaNotFoundException;
-import br.edu.solutis.dev.trail.locadora.exception.rent.RentNotFoundException;
-import br.edu.solutis.dev.trail.locadora.exception.rent.cart.CartException;
-import br.edu.solutis.dev.trail.locadora.exception.rent.cart.CartNotFoundException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.AluguelNotFoundException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.carrinho.CarrinhoException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.carrinho.CarrinhoNotFoundException;
 import br.edu.solutis.dev.trail.locadora.mapper.GenericMapper;
-import br.edu.solutis.dev.trail.locadora.model.dto.CarrinhoDtoResponse;
+import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.CarrinhoDtoResponse;
 import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.CarrinhoDto;
-import br.edu.solutis.dev.trail.locadora.model.entity.person.Driver;
-import br.edu.solutis.dev.trail.locadora.model.entity.Carrinho;
-import br.edu.solutis.dev.trail.locadora.model.entity.Aluguel;
-import br.edu.solutis.dev.trail.locadora.repository.person.DriverRepository;
-import br.edu.solutis.dev.trail.locadora.repository.rent.CartRepository;
-import br.edu.solutis.dev.trail.locadora.repository.rent.RentRepository;
+import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.Aluguel;
+import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.Carrinho;
+import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.Motorista;
+import br.edu.solutis.dev.trail.locadora.repository.pessoa.MotoristaRepository;
+import br.edu.solutis.dev.trail.locadora.repository.aluguel.CarrinhoRepository;
+import br.edu.solutis.dev.trail.locadora.repository.aluguel.AluguelRepository;
 import br.edu.solutis.dev.trail.locadora.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -48,7 +48,7 @@ public class CarrinhoService {
     public CarrinhoDtoResponse findByMotoristaId(Long motoristaId) {
         LOGGER.info("Buscando carrinho com o ID do motorista: {}", motoristaId);
 
-        Carrinho carrinho = carrinhoRepository.findCarrinhobyMotoristaId(motoristaId);
+        Carrinho carrinho = carrinhoRepository.findbyMotoristaId(motoristaId);
 
         if (carrinho == null) {
             LOGGER.error("Carrinho com o ID de motorista {} nao encontrado.", motoristaId);
@@ -99,7 +99,7 @@ public class CarrinhoService {
         try {
             LOGGER.info("Atualizando carrinho: {}", payload);
 
-            Carrinho carrinhoMotorista = carrinhoRepository.findByMotoristaId(payload.getIdMotorista());
+            Carrinho carrinhoMotorista = carrinhoRepository.findbyMotoristaId(payload.getIdMotorista());
             if (carrinhoMotorista.isDeleted()) throw new CarrinhoNotFoundException(carrinhoMotorista.getId());
 
             Carrinho carrinho = carrinhoRepository.save(carrinhoMotorista);
@@ -133,7 +133,7 @@ public class CarrinhoService {
             Motorista motorista = getMotoristaById(motoristaId);
 
             Carrinho carrinho = new Carrinho();
-            carrinho.setDriver(motorista);
+            carrinho.setMotorista(motorista);
 
             Carrinho savedCart = carrinhoRepository.save(carrinho);
 
@@ -148,7 +148,7 @@ public class CarrinhoService {
         try {
             LOGGER.info("Excluindo carrinho com ID do motorista: {}", motoristaId);
 
-            Carrinho carrinho = carrinhoRepository.findByMotoristaId(motoristaId);
+            Carrinho carrinho = carrinhoRepository.findbyMotoristaId(motoristaId);
 
             if (carrinho != null) {
                 carrinho.setDeleted(true);
@@ -165,8 +165,8 @@ public class CarrinhoService {
         try {
             LOGGER.info("Buscando aluguel com ID {} no carrinho com ID do motorista: {}", aluguelId, motoristaId);
 
-            Carrinho carrinho = carrinhoRepository.findByMotoristaId(motoristaId);
-            Aluguel aluguel = getAluguelPeloID(aluguelId);
+            Carrinho carrinho = carrinhoRepository.findbyMotoristaId(motoristaId);
+            Aluguel aluguel = getAluguelByID(aluguelId);
 
             if (carrinho.getAluguels().contains(aluguel)) {
                 return aluguel;
@@ -179,12 +179,12 @@ public class CarrinhoService {
         }
     }
 
-    addRentToCartBymotoristaId
+    
     public CarrinhoDto addAluguelToCarrinhoByMotoristaId (long motoristaId, long aluguelId) {
         try {
             LOGGER.info("Adicionando aluguel com ID {} ao carrinho com ID do motorista: {}", aluguelId, motoristaId);
 
-            Carrinho carrinho = carrinhoRepository.findByMotoristaId(motoristaId);
+            Carrinho carrinho = carrinhoRepository.findbyMotoristaId(motoristaId);
             Aluguel aluguel = getAluguelByID(aluguelId);
             carrinho.getAluguels().add(aluguel);
 
@@ -201,7 +201,7 @@ public class CarrinhoService {
         try {
             LOGGER.info("Removendo aluguel com ID {} do carrinho com ID do motorista: {}", aluguelId, motoristaId);
 
-            Carrinho carrinho = carrinhoRepository.findCarrinhoByMotoristaId(motoristaId);
+            Carrinho carrinho = carrinhoRepository.findbyMotoristaId(motoristaId);
             Aluguel aluguel = getAluguelByID(aluguelId);
             aluguel.setCarrinho(null);
             carrinho.getAluguels().remove(aluguel);
@@ -216,17 +216,17 @@ public class CarrinhoService {
         }
     }
 
-    private Motorista getMotoristaByID(long motoristaId) {
-        return motoristaRepository.encontrarPeloId(motoristaId).orElseThrow(() -> {
+    private Motorista getMotoristaById(long motoristaId) {
+        return motoristaRepository.findById(motoristaId).orElseThrow(() -> {
             LOGGER.error("Motorista com ID {} não encontrado.", motoristaId);
-            return new DriverNotFoundException(motoristaId);
+            return new MotoristaNotFoundException(motoristaId);
         });
     }
 
     private Aluguel getAluguelByID(long aluguelId) {
         return aluguelRepository.findById(aluguelId).orElseThrow(() -> {
             LOGGER.error("Aluguel com ID {} não encontrado.", aluguelId);
-            return new RentNotFoundException(aluguelId);
+            return new AluguelNotFoundException(aluguelId);
         });
     }
 }
