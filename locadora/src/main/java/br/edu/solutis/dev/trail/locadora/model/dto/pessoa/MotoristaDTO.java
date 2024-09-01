@@ -15,6 +15,11 @@ import java.time.LocalDate;
 public class MotoristaDTO {
     private Long id;
 
+    @NotNull(message = "Insira o email")
+    @NotBlank(message = "Insira o email")
+    @Size(min = 3, max = 100, message = "O nome deve ter entre 5 e 50 caracteres")
+    private String email;
+
     @NotNull(message = "Coloque o nome")
     @NotBlank(message = "Coloque o nome")
     @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
