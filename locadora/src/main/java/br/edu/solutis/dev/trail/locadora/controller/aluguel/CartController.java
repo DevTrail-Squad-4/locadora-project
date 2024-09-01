@@ -1,18 +1,18 @@
-package br.edu.solutis.dev.trail.locadora.controller;
+package br.edu.solutis.dev.trail.locadora.controller.aluguel;
 
-import br.edu.solutis.dev.trail.locadora.exception.car.CarException;
-//import br.edu.solutis.dev.trail.locadora.exception.rent.RentException;
-//import br.edu.solutis.dev.trail.locadora.exception.rent.RentNotFoundException;
-//import br.edu.solutis.dev.trail.locadora.exception.rent.cart.CartException;
-//import br.edu.solutis.dev.trail.locadora.exception.rent.cart.CartNotFoundException;
+import br.edu.solutis.dev.trail.locadora.exception.carro.CarroException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.AluguelException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.AluguelNotFoundException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.carrinho.CarrinhoException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.carrinho.CarrinhoNotFoundException;
 import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.CarrinhoDto;
-import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.CarrinhotDtoResponse;
+import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.CarrinhoDtoResponse;
 import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.AluguelDto;
 import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.AluguelDtoResponse;
 import br.edu.solutis.dev.trail.locadora.response.ErrorResponse;
-import br.edu.solutis.dev.trail.locadora.service.CarrinhoService;
-import br.edu.solutis.dev.trail.locadora.service.rent.CartService;
-import br.edu.solutis.dev.trail.locadora.service.rent.RentService;
+import br.edu.solutis.dev.trail.locadora.service.aluguel.CarrinhoService;
+import br.edu.solutis.dev.trail.locadora.service.aluguel.CarrinhoService;
+import br.edu.solutis.dev.trail.locadora.service.aluguel.AluguelService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +36,7 @@ public class CartController {
     @GetMapping("/{motoristaId}")
     public ResponseEntity<?> findCarrinhoByMotoristaId(@PathVariable Long motoristaId) {
         try {
-            return new ResponseEntity<>(carrinhoService.encontrarPeloIdMotorista(motoristaId), HttpStatus.OK);
+            return new ResponseEntity<>(carrinhoService.findByMotoristaId(motoristaId), HttpStatus.OK);
         } catch (CarrinhoNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (CarrinhoException e) {
