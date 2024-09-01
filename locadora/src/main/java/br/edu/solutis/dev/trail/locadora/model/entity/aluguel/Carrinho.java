@@ -1,6 +1,6 @@
-package br.edu.solutis.dev.trail.locadora.model.entity;
+package br.edu.solutis.dev.trail.locadora.model.entity.aluguel;
 
-import br.edu.solutis.dev.trail.locadora.model.entity.Motorista;
+import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.Motorista;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Table(name = "carrinho")
+@Table(name = "carrinhos")
 public class Carrinho {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
