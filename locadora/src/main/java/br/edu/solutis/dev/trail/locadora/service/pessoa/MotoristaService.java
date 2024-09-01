@@ -4,7 +4,7 @@ import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaExc
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaNotFoundException;
 import br.edu.solutis.dev.trail.locadora.mapper.GenericMapper;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.MotoristaDTO;
-import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.MotoristaEntity;
+import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.Motorista;
 import br.edu.solutis.dev.trail.locadora.repository.pessoa.MotoristaRepository;
 import br.edu.solutis.dev.trail.locadora.response.PageResponse;
 import br.edu.solutis.dev.trail.locadora.service.CrudService;
@@ -26,11 +26,11 @@ import java.util.List;
 public class MotoristaService implements CrudService<MotoristaDTO> {
     private static final Logger LOGGER = LoggerFactory.getLogger(MotoristaService.class);
     private final MotoristaRepository driverRepository;
-    private final GenericMapper<MotoristaDTO, MotoristaEntity> modelMapper;
+    private final GenericMapper<MotoristaDTO, Motorista> modelMapper;
 
     public MotoristaDTO findById(Long id) {
         LOGGER.info("Encontrando motorista com o id: {}", id);
-        MotoristaEntity driver = getDriver(id);
+        Motorista driver = getDriver(id);
 
         return modelMapper.mapModelToDto(driver, MotoristaDTO.class);
     }
@@ -40,7 +40,7 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
 
         try {
             Pageable paging = PageRequest.of(pageNo, pageSize);
-            Page<MotoristaEntity> pagedDrivers = driverRepository.findByDeletedFalse(paging);
+            Page<Motorista> pagedDrivers = driverRepository.findByDeletedFalse(paging);
 
             List<MotoristaDTO> driverDtos = modelMapper
                     .mapList(pagedDrivers.getContent(), MotoristaDTO.class);
@@ -63,8 +63,8 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
         try {
             LOGGER.info("Salvando motorista: {}", payload);
 
-            MotoristaEntity driver = driverRepository
-                    .save(modelMapper.mapDtoToModel(payload, MotoristaEntity.class));
+            Motorista driver = driverRepository
+                    .save(modelMapper.mapDtoToModel(payload, Motorista.class));
 
             return modelMapper.mapModelToDto(driver, MotoristaDTO.class);
         } catch (Exception e) {
@@ -74,7 +74,7 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
     }
 
     public MotoristaDTO update(MotoristaDTO payload) {
-        MotoristaEntity existingDriver = getDriver(payload.getId());
+        Motorista existingDriver = getDriver(payload.getId());
         if (existingDriver.isDeleted()) throw new MotoristaNotFoundException(existingDriver.getId());
 
         try {
@@ -84,8 +84,8 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
 
             updateDriverFields(payload, driverDto);
 
-            MotoristaEntity driver = driverRepository
-                    .save(modelMapper.mapDtoToModel(driverDto, MotoristaEntity.class));
+            Motorista driver = driverRepository
+                    .save(modelMapper.mapDtoToModel(driverDto, Motorista.class));
 
             return modelMapper.mapModelToDto(driver, MotoristaDTO.class);
 
@@ -102,7 +102,7 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
             LOGGER.info("Soft deleting driver with ID: {}", id);
 
 
-            MotoristaEntity driver = modelMapper.mapDtoToModel(driverDto, MotoristaEntity.class);
+            Motorista driver = modelMapper.mapDtoToModel(driverDto, Motorista.class);
             driver.setDeleted(true);
 
             driverRepository.save(driver);
@@ -127,7 +127,7 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
         }
     }
 
-    private MotoristaEntity getDriver(Long id) {
+    private Motorista getDriver(Long id) {
         return driverRepository.findById(id).orElseThrow(() -> {
             LOGGER.error("Motorista com o id {} não encontrado.", id);
             return new MotoristaNotFoundException(id);
