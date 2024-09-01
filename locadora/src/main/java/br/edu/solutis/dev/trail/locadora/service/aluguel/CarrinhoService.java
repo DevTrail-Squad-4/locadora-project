@@ -1,6 +1,6 @@
-package br.edu.solutis.dev.trail.locadora.service;
+package br.edu.solutis.dev.trail.locadora.service.aluguel;
 
-import br.edu.solutis.dev.trail.locadora.exception.person.driver.DriverNotFoundException;
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaNotFoundException;
 import br.edu.solutis.dev.trail.locadora.exception.rent.RentNotFoundException;
 import br.edu.solutis.dev.trail.locadora.exception.rent.cart.CartException;
 import br.edu.solutis.dev.trail.locadora.exception.rent.cart.CartNotFoundException;
