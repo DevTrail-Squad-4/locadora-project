@@ -32,8 +32,8 @@ public class ApoliceSeguro {
     @Column(name = "seguro_roubo")
     private boolean protecaoRoubo = false;
 
-    @JsonIgnoreProperties("apoliceseguro")
-    @OneToMany(mappedBy = "apoliceseguro")
+    @JsonIgnoreProperties("apoliceSeguro")
+    @OneToMany(mappedBy = "apoliceSeguro")
     private List<Aluguel> aluguelCarros;
 
     @Column(name = "deleted", nullable = false)

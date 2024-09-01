@@ -28,12 +28,12 @@ public class Modelo {
     @Column(name = "category", nullable = false)
     private ModeloCategoriaEnum category;
 
-    @JsonIgnoreProperties("models")
+    @JsonIgnoreProperties("modelos")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "manufacturer_id", nullable = false)
-    private Fabricante manufacturer;
+    @JoinColumn(name = "fabricante_id", nullable = false)
+    private Fabricante fabricante;
 
-    @JsonIgnoreProperties("models")
+    @JsonIgnoreProperties("modelos")
     @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
     private List<Carro> cars;
 

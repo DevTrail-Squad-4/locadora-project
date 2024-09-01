@@ -18,7 +18,6 @@ import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.Aluguel;
 import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.ApoliceSeguro;
 import br.edu.solutis.dev.trail.locadora.model.entity.carro.Carro;
 import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.Motorista;
-import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.ApoliceSeguro;
 import br.edu.solutis.dev.trail.locadora.repository.carro.CarroRepository;
 import br.edu.solutis.dev.trail.locadora.repository.pessoa.MotoristaRepository;
 import br.edu.solutis.dev.trail.locadora.repository.aluguel.ApoliceSeguroRepository;
@@ -178,7 +177,7 @@ public class AluguelService {
     }
 
     public List<AluguelDtoResponse> findAlugueisAtivos(){
-        List<Aluguel> alugueisAtivos = aluguelRepository.findByNaoFinalizado();
+        List<Aluguel> alugueisAtivos = aluguelRepository.findByFinalizadoTrue();
 
         try {
             return modelMapperResponse.mapList(alugueisAtivos, AluguelDtoResponse.class);
@@ -188,7 +187,7 @@ public class AluguelService {
     }
 
     public List<AluguelDtoResponse> findAlugueisFinalizados() {
-        List<Aluguel> alugueisFinalizados = aluguelRepository.findByFinalizado();
+        List<Aluguel> alugueisFinalizados = aluguelRepository.findByFinalizadoFalse();
 
         try {
             return modelMapperResponse.mapList(alugueisFinalizados, AluguelDtoResponse.class);

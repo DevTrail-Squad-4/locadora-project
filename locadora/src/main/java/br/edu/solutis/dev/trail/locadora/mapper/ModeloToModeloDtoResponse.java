@@ -12,7 +12,7 @@ public class ModeloToModeloDtoResponse extends AbstractConverter<Modelo, ModeloD
         modeloDtoResponse.setId(modelo.getId());
         modeloDtoResponse.setCategory(modelo.getCategory());
         modeloDtoResponse.setModel(modelo.getDescription());
-        modeloDtoResponse.setManufacturer(modelo.getManufacturer().getName());
+        modeloDtoResponse.setManufacturer(modelo.getFabricante().getName());
 
         return modeloDtoResponse;
     }
