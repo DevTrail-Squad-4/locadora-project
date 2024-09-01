@@ -4,13 +4,19 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import br.edu.solutis.dev.trail.locadora.model.enums.ModeloCategoriaEnum;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Data
+@Getter
+@Setter
 public class AluguelDtoResponse {
 
     
     private Long id;
 
-    private String carroNome;
+    private String motoristaNome;
 
     private String cpf;
 
@@ -42,7 +48,7 @@ public class AluguelDtoResponse {
 
     private ModeloCategoriaEnum categoria;
 
-    private String fabricantes;
+    private String fabricante;
 
 
 
