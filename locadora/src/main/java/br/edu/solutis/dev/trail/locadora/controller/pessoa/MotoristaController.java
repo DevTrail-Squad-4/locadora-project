@@ -1,14 +1,11 @@
 package br.edu.solutis.dev.trail.locadora.controller.pessoa;
 
-import br.com.solutis.locadora.exception.person.driver.DriverException;
-import br.com.solutis.locadora.exception.person.driver.DriverNotFoundException;
-import br.com.solutis.locadora.model.dto.person.DriverDto;
-import br.com.solutis.locadora.response.ErrorResponse;
-import br.com.solutis.locadora.service.person.DriverService;
-import br.com.solutis.locadora.service.rent.CartService;
+import br.com.solutis.locadora.service.person.MotoristaService;
+import br.edu.solutis.dev.trail.locadora.response.ErrorResponse;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaException;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaNotFoundException;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.MotoristaDTO;
+import br.edu.solutis.dev.trail.locadora.service.carro.CarroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/motoristas")
 @CrossOrigin
 public class MotoristaController {
-    private final MotoristaService driverService;
-    private final CartService cartService;
+    private final MotoristaService motoristaService;
+    private final CarrinhoService carrinhoService;
 
     @Operation(
             summary = "Listar por id",
@@ -32,7 +29,7 @@ public class MotoristaController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(driverService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(motoristaService.findById(id), HttpStatus.OK);
         } catch (MotoristaNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (MotoristaException e) {
@@ -50,7 +47,7 @@ public class MotoristaController {
             @RequestParam(defaultValue = "3") int size
     ) {
         try {
-            return new ResponseEntity<>(driverService.findAll(page, size), HttpStatus.OK);
+            return new ResponseEntity<>(motoristaService.findAll(page, size), HttpStatus.OK);
         } catch (MotoristaException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -65,7 +62,7 @@ public class MotoristaController {
         try {
             MotoristaDTO driverDto = MotoristaService.add(payload);
 
-            cartService.addByMotoristaId(driverDto.getId());
+            carrinhoService.addByMotoristaId(driverDto.getId());
 
             return new ResponseEntity<>(driverDto, HttpStatus.CREATED);
         } catch (MotoristaException e) {
@@ -80,7 +77,7 @@ public class MotoristaController {
     @PutMapping
     public ResponseEntity<?> update(@RequestBody MotoristaDTO payload) {
         try {
-            return new ResponseEntity<>(driverService.update(payload), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(motoristaService.update(payload), HttpStatus.NO_CONTENT);
         } catch (MotoristaNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (MotoristaException e) {
@@ -95,9 +92,9 @@ public class MotoristaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         try {
-            cartService.deleteByMotoristaId(id);
+            carrinhoService.deleteByMotoristaId(id);
 
-            driverService.deleteById(id);
+            motoristaService.deleteById(id);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (MotoristaNotFoundException e) {
