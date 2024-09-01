@@ -50,12 +50,12 @@ public class Fabricante {
 
     @Override
     public String toString() {
-        return "Manufacturer{" +
+        return "Fabricante{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", deleted=" + deleted +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
+                ", nome='" + name + '\'' +
+                ", excluido=" + deleted +
+                ", criadoEm=" + createdAt +
+                ", atualizadoEm=" + updatedAt +
                 '}';
     }
 }
