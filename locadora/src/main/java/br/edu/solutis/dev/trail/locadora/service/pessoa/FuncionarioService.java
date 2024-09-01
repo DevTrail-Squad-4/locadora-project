@@ -1,5 +1,6 @@
 package br.com.solutis.locadora.service.person;
 
+import br.edu.solutis.dev.trail.locadora.mapper.GenericMapper;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.FuncionarioDTO;
 import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.FuncionarioEntity;
 import br.edu.solutis.dev.trail.locadora.repository.pessoa.FuncionarioRepository;
@@ -52,7 +53,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new EmployeeException("Um erro ocorreu ao carregar um funcionario.", e);
+            throw new FuncionarioException("Um erro ocorreu ao carregar um funcionario.", e);
         }
     }
 
@@ -66,13 +67,13 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
             return modelMapper.mapModelToDto(Employee, FuncionarioDTO.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new EmployeeException("Um erro ocorreu ao adicionar funcionario.", e);
+            throw new FuncionarioException("Um erro ocorreu ao adicionar funcionario.", e);
         }
     }
 
     public FuncionarioDTO update(FuncionarioDTO payload) {
         FuncionarioEntity existingEmployee = getEmployee(payload.getId());
-        if (existingEmployee.isDeleted()) throw new EmployeeNotFoundException(existingEmployee.getId());
+        if (existingEmployee.isDeleted()) throw new FuncionarioNotFoundException(existingEmployee.getId());
 
         try {
             LOGGER.info("Editando funcionario: {}", payload);
@@ -88,7 +89,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new EmployeeException("Um erro ocorreu ao editar o funcionario.", e);
+            throw new FuncionarioException("Um erro ocorreu ao editar o funcionario.", e);
         }
     }
 
@@ -104,7 +105,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
             employeeRepository.save(Employee);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new EmployeeException("Um erro ocorreu ao deletar funcionario.", e);
+            throw new FuncionarioException("Um erro ocorreu ao deletar funcionario.", e);
         }
     }
 
@@ -126,7 +127,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
     private FuncionarioEntity getEmployee(Long id) {
         return employeeRepository.findById(id).orElseThrow(() -> {
             LOGGER.error("Funcionario com o id {} nao achado.", id);
-            return new EmployeeNotFoundException(id);
+            return new FuncionarioNotFoundException(id);
         });
     }
 }

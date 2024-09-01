@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "DriverController")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/drivers")
+@RequestMapping("/motoristas")
 @CrossOrigin
 public class MotoristaController {
     private final MotoristaService driverService;
@@ -31,9 +31,9 @@ public class MotoristaController {
     public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(driverService.findById(id), HttpStatus.OK);
-        } catch (DriverNotFoundException e) {
+        } catch (MotoristaNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (DriverException e) {
+        } catch (MotoristaException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -49,7 +49,7 @@ public class MotoristaController {
     ) {
         try {
             return new ResponseEntity<>(driverService.findAll(page, size), HttpStatus.OK);
-        } catch (DriverException e) {
+        } catch (MotoristaException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -61,12 +61,12 @@ public class MotoristaController {
     @PostMapping
     public ResponseEntity<?> add(@RequestBody MotoristaDTO payload) {
         try {
-            MotoristaDTO driverDto = driverService.add(payload);
+            MotoristaDTO driverDto = MotoristaService.add(payload);
 
-            cartService.addByDriverId(driverDto.getId());
+            cartService.addByMotoristaId(driverDto.getId());
 
             return new ResponseEntity<>(driverDto, HttpStatus.CREATED);
-        } catch (DriverException e) {
+        } catch (MotoristaException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -79,9 +79,9 @@ public class MotoristaController {
     public ResponseEntity<?> update(@RequestBody MotoristaDTO payload) {
         try {
             return new ResponseEntity<>(driverService.update(payload), HttpStatus.NO_CONTENT);
-        } catch (DriverNotFoundException e) {
+        } catch (MotoristaNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (DriverException e) {
+        } catch (MotoristaException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -93,14 +93,14 @@ public class MotoristaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         try {
-            cartService.deleteByDriverId(id);
+            cartService.deleteByMotoristaId(id);
 
             driverService.deleteById(id);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (DriverNotFoundException e) {
+        } catch (MotoristaNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (DriverException e) {
+        } catch (MotoristaException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
