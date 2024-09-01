@@ -68,7 +68,7 @@ public class CarroService  {
             List<Acessorio> accessories = accessoryRepository.findAllById(payload.getAccessoriesIds());
 
             Carro car = modelMapper.mapDtoToModel(payload, Carro.class);
-            car.setAccessories(accessories);
+            car.setAcessorios(accessories);
             car.setAlugado(false);
 
             return modelMapper.mapModelToDto(carRepository.save(car), CarroDto.class);
@@ -140,7 +140,7 @@ public class CarroService  {
             String model,
             Boolean rented) {
 
-        List<Carro> cars = carRepository.findCarsByFilters(category, accessory, model, rented);
+        List<Carro> cars = carRepository.findCarrosByFilters(category, accessory, model, rented);
         return modelMapperResponse.mapList(cars, CarroDtoResponse.class);
     }
     private Carro getCar(Long id) {
