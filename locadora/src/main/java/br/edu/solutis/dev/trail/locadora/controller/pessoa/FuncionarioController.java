@@ -1,11 +1,7 @@
-package br.com.solutis.locadora.controller.person;
+package br.edu.solutis.dev.trail.locadora.controller.pessoa;
 
 
-import br.com.solutis.locadora.exception.person.employee.EmployeeException;
-import br.com.solutis.locadora.exception.person.employee.EmployeeNotFoundException;
-import br.com.solutis.locadora.model.dto.person.EmployeeDto;
-import br.com.solutis.locadora.response.ErrorResponse;
-import br.com.solutis.locadora.service.person.EmployeeService;
+import br.edu.solutis.dev.trail.locadora.response.ErrorResponse;
 import br.com.solutis.locadora.service.person.FuncionarioService;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.funcionario.FuncionarioException;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.funcionario.FuncionarioNotFoundException;
