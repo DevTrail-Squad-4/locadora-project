@@ -1,7 +1,6 @@
 package br.edu.solutis.dev.trail.locadora.service;
-import br.edu.solutis.dev.trail.locadora.response.PageResponse;
 
-import java.util.List;
+import br.edu.solutis.dev.trail.locadora.response.PageResponse;
 
 public interface CrudService<T> {
     T findById(Long id);
