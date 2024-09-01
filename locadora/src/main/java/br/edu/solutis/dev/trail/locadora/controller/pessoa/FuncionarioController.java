@@ -7,6 +7,8 @@ import br.com.solutis.locadora.model.dto.person.EmployeeDto;
 import br.com.solutis.locadora.response.ErrorResponse;
 import br.com.solutis.locadora.service.person.EmployeeService;
 import br.com.solutis.locadora.service.person.FuncionarioService;
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.funcionario.FuncionarioException;
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.funcionario.FuncionarioNotFoundException;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.FuncionarioDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
