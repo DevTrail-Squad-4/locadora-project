@@ -1,5 +1,7 @@
 package br.com.solutis.locadora.service.person;
 
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.funcionario.FuncionarioException;
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.funcionario.FuncionarioNotFoundException;
 import br.edu.solutis.dev.trail.locadora.mapper.GenericMapper;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.FuncionarioDTO;
 import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.FuncionarioEntity;
@@ -26,11 +28,11 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
     private final FuncionarioRepository employeeRepository;
     private final GenericMapper<FuncionarioDTO, FuncionarioEntity> modelMapper;
 
-    public FuncionarioDTO> findById(Long id) {
+    public FuncionarioDTO findById(Long id) {
         LOGGER.info("Encontrando funcionario com id: {}", id);
         FuncionarioEntity employee = getEmployee(id);
 
-        return modelMapper.mapModelToDto(employee, FuncionarioDTO>.class);
+        return modelMapper.mapModelToDto(employee, FuncionarioDTO.class);
     }
 
     public PageResponse<FuncionarioDTO> findAll(int pageNo, int pageSize) {
@@ -61,10 +63,10 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
         try {
             LOGGER.info("Adicionando funcionario: {}", payload);
 
-            FuncionarioEntity Employee = employeeRepository
-                    .save(modelMapper.mapDtoToModel(payload, Employee.class));
+            FuncionarioEntity funcionario = employeeRepository
+                    .save(modelMapper.mapDtoToModel(payload, FuncionarioEntity.class));
 
-            return modelMapper.mapModelToDto(Employee, FuncionarioDTO.class);
+            return modelMapper.mapModelToDto(funcionario, FuncionarioDTO.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new FuncionarioException("Um erro ocorreu ao adicionar funcionario.", e);
@@ -77,15 +79,15 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
 
         try {
             LOGGER.info("Editando funcionario: {}", payload);
-            FuncionarioDTO EmployeeDto = modelMapper
+            FuncionarioDTO funcionarioDTO = modelMapper
                     .mapModelToDto(existingEmployee, FuncionarioDTO.class);
 
-            updateEmployeeFields(payload, FuncionarioDTO);
+            updateEmployeeFields(payload, funcionarioDTO);
 
-            FuncionarioEntity Employee = employeeRepository
-                    .save(modelMapper.mapDtoToModel(FuncionarioDTO, Employee.class));
+            FuncionarioEntity funcionario = employeeRepository
+                    .save(modelMapper.mapDtoToModel(funcionarioDTO, FuncionarioEntity.class));
 
-            return modelMapper.mapModelToDto(Employee, FuncionarioDTO.class);
+            return modelMapper.mapModelToDto(funcionario, FuncionarioDTO.class);
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
@@ -94,15 +96,15 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
     }
 
     public void deleteById(Long id) {
-        FuncionarioDTO EmployeeDto = findById(id);
+        FuncionarioDTO funcionarioDTO = findById(id);
 
         try {
             LOGGER.info("Soft deleting Employee with ID: {}", id);
 
-            FuncionarioEntity Employee = modelMapper.mapDtoToModel(EmployeeDto, Employee.class);
-            Employee.setDeleted(true);
+            FuncionarioEntity funcionario = modelMapper.mapDtoToModel(funcionarioDTO, FuncionarioEntity.class);
+            funcionario.setDeleted(true);
 
-            employeeRepository.save(Employee);
+            employeeRepository.save(funcionario);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new FuncionarioException("Um erro ocorreu ao deletar funcionario.", e);
@@ -110,17 +112,17 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
     }
 
     private void updateEmployeeFields(FuncionarioDTO payload, FuncionarioDTO existingEmployee) {
-        if (payload.getName() != null) {
-            existingEmployee.setName(payload.getName());
+        if (payload.getNome() != null) {
+            existingEmployee.setNome(payload.getNome());
         }
-        if (payload.getRegistration() != null) {
-            existingEmployee.setRegistration(payload.getRegistration());
+        if (payload.getMatricula() != null) {
+            existingEmployee.setMatricula(payload.getMatricula());
         }
-        if (payload.getBirthDate() != null) {
-            existingEmployee.setBirthDate(payload.getBirthDate());
+        if (payload.getAniversario() != null) {
+            existingEmployee.setAniversario(payload.getAniversario());
         }
-        if (payload.getGender() != null) {
-            existingEmployee.setGender(payload.getGender());
+        if (payload.getSexo() != null) {
+            existingEmployee.setSexo(payload.getSexo());
         }
     }
 

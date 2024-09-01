@@ -1,5 +1,7 @@
 package br.com.solutis.locadora.service.person;
 
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaException;
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaNotFoundException;
 import br.edu.solutis.dev.trail.locadora.mapper.GenericMapper;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.MotoristaDTO;
 import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.MotoristaEntity;
@@ -53,7 +55,7 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new DriverException("Um erro ocorreu durante o carregamento de motoristas.", e);
+            throw new MotoristaException("Um erro ocorreu durante o carregamento de motoristas.", e);
         }
     }
 
@@ -67,13 +69,13 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
             return modelMapper.mapModelToDto(driver, MotoristaDTO.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new DriverException("Um erro ocorreu ao salvar o motorista.", e);
+            throw new MotoristaException("Um erro ocorreu ao salvar o motorista.", e);
         }
     }
 
     public MotoristaDTO update(MotoristaDTO payload) {
         MotoristaEntity existingDriver = getDriver(payload.getId());
-        if (existingDriver.isDeleted()) throw new DriverNotFoundException(existingDriver.getId());
+        if (existingDriver.isDeleted()) throw new MotoristaNotFoundException(existingDriver.getId());
 
         try {
             LOGGER.info("Editando motorista: {}", payload);
@@ -89,7 +91,7 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new DriverException("Um erro ocorreu ao editar o motorista", e);
+            throw new MotoristaException("Um erro ocorreu ao editar o motorista", e);
         }
     }
 
@@ -106,29 +108,29 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
             driverRepository.save(driver);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new DriverException("Um erro ocorreu ao deleter o usuario", e);
+            throw new MotoristaException("Um erro ocorreu ao deleter o usuario", e);
         }
     }
 
     private void updateDriverFields(MotoristaDTO payload, MotoristaDTO existingDriver) {
-        if (payload.getName() != null) {
-            existingDriver.setName(payload.getName());
+        if (payload.getNome() != null) {
+            existingDriver.setNome(payload.getNome());
         }
         if (payload.getCnh() != null) {
             existingDriver.setCnh(payload.getCnh());
         }
-        if (payload.getBirthDate() != null) {
-            existingDriver.setBirthDate(payload.getBirthDate());
+        if (payload.getAniversario() != null) {
+            existingDriver.setAniversario(payload.getAniversario());
         }
-        if (payload.getGender() != null) {
-            existingDriver.setGender(payload.getGender());
+        if (payload.getSexo() != null) {
+            existingDriver.setSexo(payload.getSexo());
         }
     }
 
     private MotoristaEntity getDriver(Long id) {
         return driverRepository.findById(id).orElseThrow(() -> {
             LOGGER.error("Motorista com o id {} não encontrado.", id);
-            return new DriverNotFoundException(id);
+            return new MotoristaNotFoundException(id);
         });
     }
 }

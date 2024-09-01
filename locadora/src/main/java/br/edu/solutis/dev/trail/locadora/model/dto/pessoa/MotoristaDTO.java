@@ -37,4 +37,9 @@ public class MotoristaDTO {
     @NotBlank(message = "A matrícula é obrigatoria")
     @Size(max = 255, message = "A matrícula deve ter menos de 255 caracteres")
     private String matricula;
+
+    @NotNull(message = "O CNH é obrigatório")
+    @NotBlank(message = "O CNH é obrigatório")
+    @Size(max = 10, message = "O CNH deve ter menos de 10 caracteres")
+    private String cnh;
 }

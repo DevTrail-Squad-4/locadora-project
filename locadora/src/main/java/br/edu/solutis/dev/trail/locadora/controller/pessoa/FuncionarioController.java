@@ -1,12 +1,10 @@
-package br.com.solutis.locadora.controller.person;
+package br.edu.solutis.dev.trail.locadora.controller.pessoa;
 
 
-import br.com.solutis.locadora.exception.person.employee.EmployeeException;
-import br.com.solutis.locadora.exception.person.employee.EmployeeNotFoundException;
-import br.com.solutis.locadora.model.dto.person.EmployeeDto;
-import br.com.solutis.locadora.response.ErrorResponse;
-import br.com.solutis.locadora.service.person.EmployeeService;
+import br.edu.solutis.dev.trail.locadora.response.ErrorResponse;
 import br.com.solutis.locadora.service.person.FuncionarioService;
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.funcionario.FuncionarioException;
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.funcionario.FuncionarioNotFoundException;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.FuncionarioDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/funcionarios")
 @CrossOrigin
 public class FuncionarioController {
-    private final FuncionarioService employeeService;
+    private final FuncionarioService funcionarioService;
 
     @Operation(
             summary = "Listar por id",
@@ -30,7 +28,7 @@ public class FuncionarioController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(employeeService.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(funcionarioService.findById(id), HttpStatus.OK);
         } catch (FuncionarioNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (FuncionarioException e) {
@@ -47,7 +45,7 @@ public class FuncionarioController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "3") int size) {
         try {
-            return new ResponseEntity<>(employeeService.findAll(page, size), HttpStatus.OK);
+            return new ResponseEntity<>(funcionarioService.findAll(page, size), HttpStatus.OK);
         } catch (FuncionarioException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -60,7 +58,7 @@ public class FuncionarioController {
     @PostMapping
     public ResponseEntity<?> add(@RequestBody FuncionarioDTO payload) {
         try {
-            FuncionarioDTO funcionarioDto = FuncionarioService.add(payload);
+            FuncionarioDTO funcionarioDto = funcionarioService.add(payload);
 
             return new ResponseEntity<>(funcionarioDto, HttpStatus.CREATED);
         } catch (FuncionarioException e) {
@@ -75,7 +73,7 @@ public class FuncionarioController {
     @PutMapping
     public ResponseEntity<?> update(@RequestBody FuncionarioDTO payload) {
         try {
-            return new ResponseEntity<>(FuncionarioService.update(payload), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(funcionarioService.update(payload), HttpStatus.NO_CONTENT);
         } catch (FuncionarioNotFoundException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (FuncionarioException e) {
@@ -90,7 +88,7 @@ public class FuncionarioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         try {
-            FuncionarioService.deleteById(id);
+            funcionarioService.deleteById(id);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (FuncionarioNotFoundException e) {
