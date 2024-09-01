@@ -14,15 +14,15 @@ import lombok.EqualsAndHashCode;
 public class ModeloDto {
     private Long id;
 
-    @NotNull(message = "Description is required")
-    @NotBlank(message = "Description is required")
-    @Size(min = 1, max = 255, message = "Description must be between 1 and 255 characters long")
+    @NotNull(message = "Descição é obrigatória")
+    @NotBlank(message = "Descrição é obrigatória")
+    @Size(min = 1, max = 255, message = "Descrição deve ter entre 1 e 255 caracteres")
     private String description;
 
-    @NotNull(message = "Category is required")
+    @NotNull(message = "Categoria é obrigatória")
     @Enumerated(EnumType.STRING)
     private ModeloCategoriaEnum category;
 
-    @NotNull(message = "Manufacturer is required")
+    @NotNull(message = "Fabricante é obrigatório")
     private Long manufacturerId;
 }
