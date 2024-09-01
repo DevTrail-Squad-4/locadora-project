@@ -69,7 +69,7 @@ public class CarroService  {
 
             Carro car = modelMapper.mapDtoToModel(payload, Carro.class);
             car.setAccessories(accessories);
-            car.setRented(false);
+            car.setAlugado(false);
 
             return modelMapper.mapModelToDto(carRepository.save(car), CarroDto.class);
         } catch (Exception e) {
