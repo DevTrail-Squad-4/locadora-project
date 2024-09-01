@@ -1,12 +1,17 @@
 package br.edu.solutis.dev.trail.locadora.controller.aluguel;
 
 
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.insurace.ApoliceSeguroException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.insurace.ApoliceSeguroNotFoundException;
+import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.ApoliceSeguroDto;
+import br.edu.solutis.dev.trail.locadora.service.ApoliceSeguroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import br.edu.solutis.dev.trail.locadora.response.ErrorResponse;
 
 
 @Tag(name = "ApoliceSeguroController")

@@ -1,14 +1,13 @@
 package br.edu.solutis.dev.trail.locadora.service;
 
 
-import br.edu.solutis.dev.trail.locadora.exception.rent.insurace.InsurancePolicyException;
-import br.edu.solutis.dev.trail.locadora.exception.rent.insurace.InsurancePolicyNotFoundException;
+
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.insurace.ApoliceSeguroException;
+import br.edu.solutis.dev.trail.locadora.exception.aluguel.insurace.ApoliceSeguroNotFoundException;
 import br.edu.solutis.dev.trail.locadora.mapper.GenericMapper;
 import br.edu.solutis.dev.trail.locadora.model.dto.aluguel.ApoliceSeguroDto;
 import br.edu.solutis.dev.trail.locadora.model.entity.ApoliceSeguro;
-import br.edu.solutis.dev.trail.locadora.repository.rent.InsurancePolicyRepository;
 import br.edu.solutis.dev.trail.locadora.response.PageResponse;
-import br.edu.solutis.dev.trail.locadora.service.CrudService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

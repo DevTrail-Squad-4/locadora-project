@@ -4,7 +4,7 @@ import br.edu.solutis.dev.trail.locadora.exception.pessoa.funcionario.Funcionari
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.funcionario.FuncionarioNotFoundException;
 import br.edu.solutis.dev.trail.locadora.mapper.GenericMapper;
 import br.edu.solutis.dev.trail.locadora.model.dto.pessoa.FuncionarioDTO;
-import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.FuncionarioEntity;
+import br.edu.solutis.dev.trail.locadora.model.entity.pessoa.Funcionario;
 import br.edu.solutis.dev.trail.locadora.repository.pessoa.FuncionarioRepository;
 import br.edu.solutis.dev.trail.locadora.response.PageResponse;
 import br.edu.solutis.dev.trail.locadora.service.CrudService;
@@ -26,11 +26,11 @@ import java.util.List;
 public class FuncionarioService implements CrudService<FuncionarioDTO> {
     private static final Logger LOGGER = LoggerFactory.getLogger(FuncionarioService.class);
     private final FuncionarioRepository employeeRepository;
-    private final GenericMapper<FuncionarioDTO, FuncionarioEntity> modelMapper;
+    private final GenericMapper<FuncionarioDTO, Funcionario> modelMapper;
 
     public FuncionarioDTO findById(Long id) {
         LOGGER.info("Encontrando funcionario com id: {}", id);
-        FuncionarioEntity employee = getEmployee(id);
+        Funcionario employee = getEmployee(id);
 
         return modelMapper.mapModelToDto(employee, FuncionarioDTO.class);
     }
@@ -40,7 +40,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
 
         try {
             Pageable paging = PageRequest.of(pageNo, pageSize);
-            Page<FuncionarioEntity> pagedEmployees = employeeRepository.findByDeletedFalse(paging);
+            Page<Funcionario> pagedEmployees = employeeRepository.findByDeletedFalse(paging);
 
             List<FuncionarioDTO> employeeDtos = modelMapper
                     .mapList(pagedEmployees.getContent(), FuncionarioDTO.class);
@@ -63,8 +63,8 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
         try {
             LOGGER.info("Adicionando funcionario: {}", payload);
 
-            FuncionarioEntity funcionario = employeeRepository
-                    .save(modelMapper.mapDtoToModel(payload, FuncionarioEntity.class));
+            Funcionario funcionario = employeeRepository
+                    .save(modelMapper.mapDtoToModel(payload, Funcionario.class));
 
             return modelMapper.mapModelToDto(funcionario, FuncionarioDTO.class);
         } catch (Exception e) {
@@ -74,7 +74,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
     }
 
     public FuncionarioDTO update(FuncionarioDTO payload) {
-        FuncionarioEntity existingEmployee = getEmployee(payload.getId());
+        Funcionario existingEmployee = getEmployee(payload.getId());
         if (existingEmployee.isDeleted()) throw new FuncionarioNotFoundException(existingEmployee.getId());
 
         try {
@@ -84,8 +84,8 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
 
             updateEmployeeFields(payload, funcionarioDTO);
 
-            FuncionarioEntity funcionario = employeeRepository
-                    .save(modelMapper.mapDtoToModel(funcionarioDTO, FuncionarioEntity.class));
+            Funcionario funcionario = employeeRepository
+                    .save(modelMapper.mapDtoToModel(funcionarioDTO, Funcionario.class));
 
             return modelMapper.mapModelToDto(funcionario, FuncionarioDTO.class);
 
@@ -101,7 +101,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
         try {
             LOGGER.info("Soft deleting Employee with ID: {}", id);
 
-            FuncionarioEntity funcionario = modelMapper.mapDtoToModel(funcionarioDTO, FuncionarioEntity.class);
+            Funcionario funcionario = modelMapper.mapDtoToModel(funcionarioDTO, Funcionario.class);
             funcionario.setDeleted(true);
 
             employeeRepository.save(funcionario);
@@ -126,7 +126,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
         }
     }
 
-    private FuncionarioEntity getEmployee(Long id) {
+    private Funcionario getEmployee(Long id) {
         return employeeRepository.findById(id).orElseThrow(() -> {
             LOGGER.error("Funcionario com o id {} nao achado.", id);
             return new FuncionarioNotFoundException(id);

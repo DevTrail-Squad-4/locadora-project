@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class FuncionarioEntity extends Pessoa{
+public class Funcionario extends Pessoa{
     @Column(unique = true, nullable = false)
     private String registration;
 
