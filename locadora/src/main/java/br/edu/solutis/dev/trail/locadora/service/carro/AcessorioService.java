@@ -6,7 +6,7 @@ import br.edu.solutis.dev.trail.locadora.exception.carro.Acessorio.AcessorioExce
 import br.edu.solutis.dev.trail.locadora.exception.carro.Acessorio.AcessorioNotFoundException;
 import br.edu.solutis.dev.trail.locadora.model.dto.carro.AcessorioDto;
 import br.edu.solutis.dev.trail.locadora.model.entity.carro.Acessorio;
-import br.edu.solutis.dev.trail.locadora.repository.AcessorioRepository;
+import br.edu.solutis.dev.trail.locadora.repository.carro.AcessorioRepository;
 import br.edu.solutis.dev.trail.locadora.mapper.GenericMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class AcessorioService implements CrudService<AcessorioDto> {
     private final GenericMapper<AcessorioDto, Acessorio> modelMapper;
 
     public AcessorioDto findById(Long id) {
-        LOGGER.info("Finding accessory with ID: {}", id);
+        LOGGER.info("Encontrar acessório com ID {}", id);
         Acessorio accessory = getAccessory(id);
 
         return modelMapper.mapModelToDto(accessory, AcessorioDto.class);
@@ -37,7 +37,7 @@ public class AcessorioService implements CrudService<AcessorioDto> {
 
     public PageResponse<AcessorioDto> findAll(int pageNo, int pageSize) throws AcessorioNotFoundException{
 
-            LOGGER.info("Fetching accessories with page number {} and page size {}.", pageNo, pageSize);
+            LOGGER.info("Buscando acessórios com número de página {} e tamanho de página {}.", pageNo, pageSize);
             try{
             Pageable paging = PageRequest.of(pageNo, pageSize);
             Page<Acessorio> pagedAccessories = accessoryRepository.findAll(paging);
@@ -53,14 +53,14 @@ public class AcessorioService implements CrudService<AcessorioDto> {
             return pageResponse;
             } catch (Exception e) {
                 LOGGER.error(e.getMessage());
-                throw new AcessorioException("An error occurred while finding accessory.", e);
+                throw new AcessorioException("Ocorreu um erro ao encontrar o acessório.", e);
             }
     }
 
     public AcessorioDto add(AcessorioDto payload) throws AcessorioException{
 
         try{
-            LOGGER.info("Adding accessory {}.", payload);
+            LOGGER.info("Adicionando acessório {}.", payload);
 
             Acessorio accessory = accessoryRepository
                     .save(modelMapper.mapDtoToModel(payload, Acessorio.class));
@@ -68,7 +68,7 @@ public class AcessorioService implements CrudService<AcessorioDto> {
             return modelMapper.mapModelToDto(accessory, AcessorioDto.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new AcessorioException("An error occurred while add accessory.", e);
+            throw new AcessorioException("Ocorreu um erro ao adicionar acessório.", e);
         }
     }
 
@@ -79,7 +79,7 @@ public class AcessorioService implements CrudService<AcessorioDto> {
         try{
 
 
-            LOGGER.info("Updating accessory {}.", payload);
+            LOGGER.info("Atualizando acessório {}.", payload);
             AcessorioDto accessoryDto = modelMapper
                     .mapModelToDto(existingAccessory, AcessorioDto.class);
 
@@ -92,7 +92,7 @@ public class AcessorioService implements CrudService<AcessorioDto> {
 
         } catch (Exception e) {
         LOGGER.error(e.getMessage());
-        throw new AcessorioException("An error occurred while updating accessory.", e);
+        throw new AcessorioException("Ocorreu um erro ao atualizar o acessório.", e);
         }
     }
 
@@ -100,7 +100,7 @@ public class AcessorioService implements CrudService<AcessorioDto> {
         AcessorioDto accessoryDto = findById(id);
 
         try {
-            LOGGER.info("Soft deleting accessory with ID {}.", id);
+            LOGGER.info("Acessório de exclusão reversível com ID {}.", id);
 
             Acessorio accessory = modelMapper.mapDtoToModel(accessoryDto, Acessorio.class);
             accessory.setDeleted(true);
@@ -108,7 +108,7 @@ public class AcessorioService implements CrudService<AcessorioDto> {
             accessoryRepository.save(accessory);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new AcessorioException("An error occurred while deleting accessory.", e);
+            throw new AcessorioException("Ocorreu um erro ao excluir o acessório.", e);
         }
     }
 
@@ -120,7 +120,7 @@ public class AcessorioService implements CrudService<AcessorioDto> {
 
     private Acessorio getAccessory(Long id) {
         return accessoryRepository.findById(id).orElseThrow(() -> {
-            LOGGER.error("Accessory with ID {} not found.", id);
+            LOGGER.error("Acessório com ID {} não encontrado.", id);
             return new AcessorioNotFoundException(id);
         });
     }

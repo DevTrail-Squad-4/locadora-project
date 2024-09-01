@@ -7,7 +7,7 @@ import br.edu.solutis.dev.trail.locadora.exception.carro.Fabricante.FabricanteEx
 import br.edu.solutis.dev.trail.locadora.exception.carro.Fabricante.FabricanteNotFoundException;
 import br.edu.solutis.dev.trail.locadora.model.dto.carro.FabricanteDto;
 import br.edu.solutis.dev.trail.locadora.model.entity.carro.Fabricante;
-import br.edu.solutis.dev.trail.locadora.repository.FabricanteRepository;
+import br.edu.solutis.dev.trail.locadora.repository.carro.FabricanteRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class FabricanteService implements CrudService<FabricanteDto> {
     private final GenericMapper<FabricanteDto, Fabricante> modelMapper;
 
     public FabricanteDto findById(Long id) {
-        LOGGER.info("Finding manufacturer with ID: {}", id);
+        LOGGER.info("Localizando fabricante com ID {}", id);
         Fabricante manufacturer = getManufacturer(id);
 
         return modelMapper.mapModelToDto(manufacturer, FabricanteDto.class);
@@ -37,7 +37,7 @@ public class FabricanteService implements CrudService<FabricanteDto> {
 
     public PageResponse<FabricanteDto> findAll(int pageNo, int pageSize) {
         try {
-            LOGGER.info("Fetching manufacturer with page number {} and page size {}.", pageNo, pageSize);
+            LOGGER.info("Buscando fabricante com número de página {} e tamanho de página {}.", pageNo, pageSize);
 
             Pageable paging = PageRequest.of(pageNo, pageSize);
             Page<Fabricante> pagedManufacturers = manufacturerRepository.findByDeletedFalse(paging);
@@ -54,7 +54,7 @@ public class FabricanteService implements CrudService<FabricanteDto> {
             return pageResponse;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new FabricanteException("An error occurred while fetching manufacturers.", e);
+            throw new FabricanteException("Ocorreu um erro ao buscar os fabricantes.", e);
         }
     }
 
@@ -68,7 +68,7 @@ public class FabricanteService implements CrudService<FabricanteDto> {
             return modelMapper.mapModelToDto(manufacturer, FabricanteDto.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new FabricanteException("An error occurred while adding manufacturer.", e);
+            throw new FabricanteException("Ocorreu um erro ao adicionar o fabricante.", e);
         }
     }
 
@@ -77,7 +77,7 @@ public class FabricanteService implements CrudService<FabricanteDto> {
         if (existingManufacturer.isDeleted()) throw new FabricanteNotFoundException(existingManufacturer.getId());
 
         try {
-            LOGGER.info("Updating manufacturer: {}", payload);
+            LOGGER.info("Atualizando fabricante {}", payload);
             FabricanteDto manufacturerDto = modelMapper
                     .mapModelToDto(existingManufacturer, FabricanteDto.class);
 
@@ -89,7 +89,7 @@ public class FabricanteService implements CrudService<FabricanteDto> {
             return modelMapper.mapModelToDto(manufacturer, FabricanteDto.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new FabricanteException("An error occurred while updating manufacturer.", e);
+            throw new FabricanteException("Ocorreu um erro ao atualizar o fabricante.", e);
         }
     }
 
@@ -97,7 +97,7 @@ public class FabricanteService implements CrudService<FabricanteDto> {
         FabricanteDto manufacturerDto = findById(id);
 
         try {
-            LOGGER.info("Soft deleting manufacturer with ID: {}", id);
+            LOGGER.info("Exclusão reversível do fabricante com ID {}", id);
 
             Fabricante manufacturer = modelMapper.mapDtoToModel(manufacturerDto, Fabricante.class);
             manufacturer.setDeleted(true);
@@ -105,7 +105,7 @@ public class FabricanteService implements CrudService<FabricanteDto> {
             manufacturerRepository.save(manufacturer);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new FabricanteException("An error occurred while deleting manufacturer.", e);
+            throw new FabricanteException("Ocorreu um erro ao excluir o fabricante.", e);
         }
     }
 
@@ -118,7 +118,7 @@ public class FabricanteService implements CrudService<FabricanteDto> {
     private Fabricante getManufacturer(Long id) {
         return manufacturerRepository.findById(id)
                 .orElseThrow(() -> {
-                    LOGGER.error("Manufacturer with ID {} not found.", id);
+                    LOGGER.error("Fabricante com ID {} não encontrado.", id);
                     return new FabricanteNotFoundException(id);
                 });
     }

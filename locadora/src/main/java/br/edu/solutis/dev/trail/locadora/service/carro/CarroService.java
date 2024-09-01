@@ -10,8 +10,8 @@ import br.edu.solutis.dev.trail.locadora.model.dto.carro.CarroDtoResponse;
 import br.edu.solutis.dev.trail.locadora.model.entity.carro.Acessorio;
 import br.edu.solutis.dev.trail.locadora.model.entity.carro.Carro;
 import br.edu.solutis.dev.trail.locadora.model.enums.ModeloCategoriaEnum;
-import br.edu.solutis.dev.trail.locadora.repository.AcessorioRepository;
-import br.edu.solutis.dev.trail.locadora.repository.CarroRepository;
+import br.edu.solutis.dev.trail.locadora.repository.carro.AcessorioRepository;
+import br.edu.solutis.dev.trail.locadora.repository.carro.CarroRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class CarroService  {
     private final GenericMapper<CarroDtoResponse, Carro> modelMapperResponse;
 
     public CarroDtoResponse findById(Long id) {
-        LOGGER.info("Finding car with ID: {}", id);
+        LOGGER.info("Encontrar carro com ID {}", id);
         Carro car = getCar(id);
 
         return modelMapperResponse.mapModelToDto(car, CarroDtoResponse.class);
@@ -42,7 +42,7 @@ public class CarroService  {
 
     public PageResponse<CarroDtoResponse> findAll(int pageNo, int pageSize) {
         try {
-            LOGGER.info("Fetching cars with page number {} and page size {}.", pageNo, pageSize);
+            LOGGER.info("Buscando carros com número de página {} e tamanho de página {}.", pageNo, pageSize);
 
             Pageable paging = PageRequest.of(pageNo, pageSize);
             Page<Carro> pagedCars = carRepository.findByDeletedFalseAndRentedFalse(paging);
@@ -57,13 +57,13 @@ public class CarroService  {
             return pageResponse;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new CarroException("An error occurred while fetching cars.", e);
+            throw new CarroException("Ocorreu um erro ao buscar carros.", e);
         }
     }
 
     public CarroDto add(CarroDto payload) {
         try {
-            LOGGER.info("Adding car: {}", payload);
+            LOGGER.info("Adicionando carro {}", payload);
 
             List<Acessorio> accessories = accessoryRepository.findAllById(payload.getAccessoriesIds());
 
@@ -74,7 +74,7 @@ public class CarroService  {
             return modelMapper.mapModelToDto(carRepository.save(car), CarroDto.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new CarroException("An error occurred while adding car.", e);
+            throw new CarroException("Ocorreu um erro ao adicionar o carro.", e);
         }
     }
 
@@ -83,7 +83,7 @@ public class CarroService  {
         if (existingCar.isDeleted()) throw new FabricanteNotFoundException(existingCar.getId());
 
         try {
-            LOGGER.info("Updating car: {}", payload);
+            LOGGER.info("Atualizando carro {}", payload);
             CarroDto carDto = modelMapper
                     .mapModelToDto(existingCar, CarroDto.class);
 
@@ -95,7 +95,7 @@ public class CarroService  {
             return modelMapperResponse.mapModelToDto(car, CarroDtoResponse.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new CarroException("An error occurred while updating car.", e);
+            throw new CarroException("Ocorreu um erro ao atualizar o carro.", e);
         }
     }
 
@@ -103,7 +103,7 @@ public class CarroService  {
 
 
         try {
-            LOGGER.info("Soft deleting car with ID: {}", id);
+            LOGGER.info("Exclusão reversível de carro com ID {}", id);
 
             Carro car = getCar(id);
             car.setDeleted(true);
@@ -111,7 +111,7 @@ public class CarroService  {
             carRepository.save(car);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new CarroException("An error occurred while deleting car.", e);
+            throw new CarroException("Ocorreu um erro ao excluir o carro.", e);
         }
     }
 
@@ -145,7 +145,7 @@ public class CarroService  {
     }
     private Carro getCar(Long id) {
         return carRepository.findById(id).orElseThrow(() -> {
-            LOGGER.error("Car with ID {} not found.", id);
+            LOGGER.error("Carro com ID {} não encontrado.", id);
             return new CarroNotFoundException(id);
         });
     }
