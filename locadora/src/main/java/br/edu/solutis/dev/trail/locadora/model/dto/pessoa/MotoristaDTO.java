@@ -27,7 +27,7 @@ public class MotoristaDTO {
 
     @NotNull(message = "O CPF é obrigatório")
     @NotBlank(message = "O CPF é obrigatório")
-    @Size(min = 14, max = 14, message = "O CPF deve ter 14 numeros")
+    @Size(min = 11, max = 11, message = "O CPF deve ter 11 digitos")
     private String cpf;
 
     @NotNull(message = "O aniversátio é obrigatorio")
@@ -38,13 +38,9 @@ public class MotoristaDTO {
     @Column(name = "sexo", nullable = false)
     private SexoEnum sexo;
 
-    @NotNull(message = "A matrícula é obrigatoria")
-    @NotBlank(message = "A matrícula é obrigatoria")
-    @Size(max = 255, message = "A matrícula deve ter menos de 255 caracteres")
-    private String matricula;
 
     @NotNull(message = "O CNH é obrigatório")
     @NotBlank(message = "O CNH é obrigatório")
-    @Size(max = 10, message = "O CNH deve ter menos de 10 caracteres")
+    @Size(min = 11, max = 11, message = "O CNH deve ter menos de 10 caracteres")
     private String cnh;
 }
