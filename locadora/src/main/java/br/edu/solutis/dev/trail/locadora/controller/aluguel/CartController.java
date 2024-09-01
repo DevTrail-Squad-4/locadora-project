@@ -34,7 +34,7 @@ public class CartController {
             description = "Retorna as informações do carrinho do motorista"
     )
     @GetMapping("/{motoristaId}")
-    public ResponseEntity<?> findCarrinhoByMotoristaId(@PathVariable Long motoristaId) {
+    public ResponseEntity<?> findByMotoristaId(@PathVariable Long motoristaId) {
         try {
             return new ResponseEntity<>(carrinhoService.findByMotoristaId(motoristaId), HttpStatus.OK);
         } catch (CarrinhoNotFoundException e) {
