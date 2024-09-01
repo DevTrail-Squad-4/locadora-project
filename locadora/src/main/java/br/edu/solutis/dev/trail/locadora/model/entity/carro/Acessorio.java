@@ -55,7 +55,7 @@ public class Acessorio {
 
     @Override
     public String toString() {
-        return "Accessory{" +
+        return "Acessorio{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", deleted=" + deleted +
