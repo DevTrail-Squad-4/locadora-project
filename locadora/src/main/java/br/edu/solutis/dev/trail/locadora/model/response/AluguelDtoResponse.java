@@ -1,7 +1,9 @@
-package br.edu.solutis.dev.trail.locadora.model.reponse;
+package br.edu.solutis.dev.trail.locadora.model.response;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import br.edu.solutis.dev.trail.locadora.model.enums.ModeloCategoriaEnum;
 
 public class AluguelDtoResponse {
 
@@ -38,7 +40,7 @@ public class AluguelDtoResponse {
 
     private String modelo;
 
-    private ModelCategoryEnum categoria;
+    private ModeloCategoriaEnum categoria;
 
     private String fabricantes;
 

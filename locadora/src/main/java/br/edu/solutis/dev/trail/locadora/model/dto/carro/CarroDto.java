@@ -15,31 +15,31 @@ import java.util.List;
 public class CarroDto {
     private Long id;
 
-    @NotNull(message = "Plate is required")
-    @NotBlank(message = "Plate is required")
-    @Size(min = 1, max = 255, message = "Plate must be between 1 and 255 characters long")
+    @NotNull(message = "Placa é obrigatória")
+    @NotBlank(message = "Placa é obrigatória")
+    @Size(min = 1, max = 255, message = "Placa deve ter entre 1 e 255 caracteres")
     private String plate;
 
-    @NotNull(message = "Chassis is required")
-    @NotBlank(message = "Chassis is required")
-    @Size(min = 1, max = 255, message = "Chassis must be between 1 and 255 characters long")
+    @NotNull(message = "Chassi é obrigatório")
+    @NotBlank(message = "Chassi é obrigatório")
+    @Size(min = 1, max = 255, message = "Chassi deve ter entre 1 e 255 caracteres")
     private String chassis;
 
-    @NotNull(message = "Color is required")
-    @NotBlank(message = "Color is required")
+    @NotNull(message = "Cor é obrigatória")
+    @NotBlank(message = "Cor é obrigatória")
     private String color;
 
-    @NotNull(message = "Daily value is required")
+    @NotNull(message = "O valor diário é obrigatório")
     private BigDecimal dailyValue;
 
     private boolean rented = false;
 
-    @NotNull(message = "Image URL is required")
-    @NotBlank(message = "Image URL is required")
-    @URL(message = "Image URL must be a valid URL")
+    @NotNull(message = "Url da imagem é obrigatória")
+    @NotBlank(message = "Url da imagem é obrigatória")
+    @URL(message = "Url da imagem inválida")
     private String imageUrl;
 
-    @NotNull(message = "Model is required")
+    @NotNull(message = "Modelo é obrigatório")
     private Long modelId;
 
     private List<Long> accessoriesIds;

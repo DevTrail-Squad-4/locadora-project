@@ -13,7 +13,7 @@ import br.edu.solutis.dev.trail.locadora.model.dto.carro.FabricanteDto;
 import br.edu.solutis.dev.trail.locadora.service.carro.FabricanteService;
 import br.edu.solutis.dev.trail.locadora.response.ErrorResponse;
 
-@Tag(name = "ManufacturerController")
+@Tag(name = "FabricanteController")
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin

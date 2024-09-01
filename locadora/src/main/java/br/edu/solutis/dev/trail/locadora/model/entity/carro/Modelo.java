@@ -60,7 +60,7 @@ public class Modelo {
 
     @Override
     public String toString() {
-        return "Model{" +
+        return "Modelo{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", category=" + category +
