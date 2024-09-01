@@ -24,6 +24,10 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 public class Motorista  extends Pessoa{
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
     @Column(unique = true, nullable = false)
     private String cnh;
 
