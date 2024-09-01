@@ -1,13 +1,15 @@
 package br.edu.solutis.dev.trail.locadora.model.entity.aluguel;
 
 
-import br.edu.solutis.dev.trail.locadora.model.entity.Carro;
-import  br.edu.solutis.dev.trail.locadora.model.entity.Motorista;
+import br.edu.solutis.dev.trail.locadora.model.entity.carro.Carro;
+import  br.edu.solutis.dev.trail.locadora.model.entity.pessoa.Motorista;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,6 +18,8 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "alugueis")
 public class Aluguel {
@@ -46,17 +50,17 @@ public class Aluguel {
     @JoinColumn(name = "apolice_seguro_id", nullable = false)
     private ApoliceSeguro apoliceSeguro;
 
-    @JsonIgnoreProperties("Alugueis")
+    @JsonIgnoreProperties("alugueis")
     @ManyToOne(optional = false)
     @JoinColumn(name = "motorista_id", nullable = false)
     private Motorista motorista;
 
-    @JsonIgnoreProperties("Alugueis")
+    @JsonIgnoreProperties("alugueis")
     @ManyToOne(optional = false)
     @JoinColumn(name = "carro_id", nullable = false)
     private Carro carro;
 
-    @JsonIgnoreProperties("Alugueis")
+    @JsonIgnoreProperties("alugueis")
     @ManyToOne
     @JoinColumn(name = "carrinho_id", nullable = false)
     private Carrinho carrinho;
@@ -86,7 +90,7 @@ public class Aluguel {
     public String toString() {
         return "Aluguel{" +
                 "id=" + id +
-                ", DataFinalizada=" + dataFinalizada +
+                ", dataFinalizada=" + dataFinalizada +
                 ", dataInicial=" + dataInicial +
                 ", dataFinal=" + dataFinal +
                 ", valor=" + valor +

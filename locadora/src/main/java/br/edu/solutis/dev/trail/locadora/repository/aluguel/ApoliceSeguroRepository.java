@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface ApoliceSeguroRepositorio extends JpaRepository<ApoliceSeguro, Long> {
+public interface ApoliceSeguroRepository extends JpaRepository<ApoliceSeguro, Long> {
     Page<ApoliceSeguro> findByDeletedFalse(Pageable pageable);
 }
 

@@ -6,7 +6,9 @@ import br.edu.solutis.dev.trail.locadora.model.entity.aluguel.Aluguel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Data
 @Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "carros")
@@ -31,14 +35,14 @@ public class Carro {
     @Column(nullable = false)
     private String color;
 
-    @Column(name = "daily_value", nullable = false)
-    private BigDecimal dailyValue;
+    @Column(name = "valor_diario", nullable = false)
+    private BigDecimal valorDiario;
 
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
     @Column(nullable = false)
-    private boolean rented = false;
+    private boolean alugado = false;
 
     @JsonIgnoreProperties("cars")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -83,15 +87,16 @@ public class Carro {
     public String toString() {
         return "Carro{" +
                 "id=" + id +
-                ", placa='" + plate + '\'' +
-                ", chassi='" + chassis + '\'' +
-                ", cor='" + color + '\'' +
-                ", valorDiario=" + dailyValue +
-                ", imagemUrl='" + imageUrl + '\'' +
-                ", alugado=" + rented +
-                ", excluido=" + deleted +
-                ", criadoEm=" + createdAt +
-                ", atualizadoEm=" + updatedAt +
+                ", plate='" + plate + '\'' +
+                ", chassis='" + chassis + '\'' +
+                ", color='" + color + '\'' +
+                ", dailyValue=" + valorDiario +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", rented=" + alugado +
+                ", deleted=" + deleted +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+
                 '}';
     }
 }
