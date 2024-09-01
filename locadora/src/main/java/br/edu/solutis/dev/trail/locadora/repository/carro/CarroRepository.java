@@ -15,20 +15,20 @@ import java.util.List;
 
 @Repository
 public interface CarroRepository extends JpaRepository<Carro, Long> {
-    Page<Carro> findByDeletedFalseAndRentedFalse(Pageable pageable);
+    Page<Carro> findByDeletedFalseAndAlugadoFalse(Pageable pageable);
 
-    @Query("SELECT DISTINCT c FROM Car c " +
-            "LEFT JOIN c.rents r " +
-            "WHERE (:rented IS NULL OR c.rented = :rented) " +
-            "AND (:accessory IS NULL OR :accessory MEMBER OF c.accessories) " +
+    @Query("SELECT DISTINCT c FROM Carro c " +
+            "LEFT JOIN c.alugueis r " +
+            "WHERE (:alugado IS NULL OR c.alugado = :alugado) " +
+            "AND (:acessorio IS NULL OR :acessorio MEMBER OF c.acessorios) " +
             "AND (c.deleted = false) " +
-            "AND (:category IS NULL OR c.model.category = :category) " +
-            "AND ((:rented = true) OR (c.rented = false))"+
-            "AND (:model IS NULL OR c.model.description = :model)")
+            "AND (:categoria IS NULL OR c.modelo.categoria = :categoria) " +
+            "AND ((:alugado = true) OR (c.alugado = false))"+
+            "AND (:modelo IS NULL OR c.modelo.descricao = :modelo)")
 
-    List<Carro> findCarsByFilters(
-            @Param("category") ModeloCategoriaEnum category,
-            @Param("accessory") Acessorio accessory,
-            @Param("model") String model,
-            @Param("rented") Boolean rented);
+    List<Carro> findCarrosByFilters(
+            @Param("categoria") ModeloCategoriaEnum categoria,
+            @Param("acessorio") Acessorio acessorio,
+            @Param("modelo") String modelo,
+            @Param("alugado") Boolean alugado);
 }

@@ -22,11 +22,11 @@ public class Modelo {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String description;
+    private String descricao;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "category", nullable = false)
-    private ModeloCategoriaEnum category;
+    @Column(name = "categoria", nullable = false)
+    private ModeloCategoriaEnum categoria;
 
     @JsonIgnoreProperties("modelos")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -34,8 +34,8 @@ public class Modelo {
     private Fabricante fabricante;
 
     @JsonIgnoreProperties("modelos")
-    @OneToMany(mappedBy = "model", fetch = FetchType.LAZY)
-    private List<Carro> cars;
+    @OneToMany(mappedBy = "modelo", fetch = FetchType.LAZY)
+    private List<Carro> carros;
 
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
@@ -62,8 +62,8 @@ public class Modelo {
     public String toString() {
         return "Modelo{" +
                 "id=" + id +
-                ", descrição='" + description + '\'' +
-                ", categoria=" + category +
+                ", descrição='" + descricao + '\'' +
+                ", categoria=" + categoria +
                 ", excluido=" + deleted +
                 ", criadoEm=" + createdAt +
                 ", atualizadoEm=" + updatedAt +

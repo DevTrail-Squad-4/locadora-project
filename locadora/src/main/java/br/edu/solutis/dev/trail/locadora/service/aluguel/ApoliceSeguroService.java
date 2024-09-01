@@ -41,7 +41,7 @@ public class ApoliceSeguroService implements CrudService<ApoliceSeguroDto> {
             LOGGER.info("Buscando apólices de seguro com número da página {} e tamanho da página {}.", numeroPagina, tamanhoPagina);
 
             Pageable paginacao = PageRequest.of(numeroPagina, tamanhoPagina);
-            Page<ApoliceSeguro> apoliceSeguroPaginado = apoliceSeguroRepository.findByNaoDeletado(paginacao);
+            Page<ApoliceSeguro> apoliceSeguroPaginado = apoliceSeguroRepository.findByDeletedFalse(paginacao);
 
             List<ApoliceSeguroDto> apoliceSeguroDtos = modelMapper.
                     mapList(apoliceSeguroPaginado.getContent(), ApoliceSeguroDto.class);

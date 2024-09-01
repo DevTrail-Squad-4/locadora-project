@@ -48,7 +48,7 @@ public class CarrinhoService {
     public CarrinhoDtoResponse findByMotoristaId(Long motoristaId) {
         LOGGER.info("Buscando carrinho com o ID do motorista: {}", motoristaId);
 
-        Carrinho carrinho = carrinhoRepository.findbyMotoristaId(motoristaId);
+        Carrinho carrinho = carrinhoRepository.findByMotoristaId(motoristaId);
 
         if (carrinho == null) {
             LOGGER.error("Carrinho com o ID de motorista {} nao encontrado.", motoristaId);
@@ -99,7 +99,7 @@ public class CarrinhoService {
         try {
             LOGGER.info("Atualizando carrinho: {}", payload);
 
-            Carrinho carrinhoMotorista = carrinhoRepository.findbyMotoristaId(payload.getIdMotorista());
+            Carrinho carrinhoMotorista = carrinhoRepository.findByMotoristaId(payload.getIdMotorista());
             if (carrinhoMotorista.isDeleted()) throw new CarrinhoNotFoundException(carrinhoMotorista.getId());
 
             Carrinho carrinho = carrinhoRepository.save(carrinhoMotorista);
@@ -148,7 +148,7 @@ public class CarrinhoService {
         try {
             LOGGER.info("Excluindo carrinho com ID do motorista: {}", motoristaId);
 
-            Carrinho carrinho = carrinhoRepository.findbyMotoristaId(motoristaId);
+            Carrinho carrinho = carrinhoRepository.findByMotoristaId(motoristaId);
 
             if (carrinho != null) {
                 carrinho.setDeleted(true);
@@ -165,10 +165,10 @@ public class CarrinhoService {
         try {
             LOGGER.info("Buscando aluguel com ID {} no carrinho com ID do motorista: {}", aluguelId, motoristaId);
 
-            Carrinho carrinho = carrinhoRepository.findbyMotoristaId(motoristaId);
+            Carrinho carrinho = carrinhoRepository.findByMotoristaId(motoristaId);
             Aluguel aluguel = getAluguelByID(aluguelId);
 
-            if (carrinho.getAluguels().contains(aluguel)) {
+            if (carrinho.getAlugueis().contains(aluguel)) {
                 return aluguel;
             }
 
@@ -184,9 +184,9 @@ public class CarrinhoService {
         try {
             LOGGER.info("Adicionando aluguel com ID {} ao carrinho com ID do motorista: {}", aluguelId, motoristaId);
 
-            Carrinho carrinho = carrinhoRepository.findbyMotoristaId(motoristaId);
+            Carrinho carrinho = carrinhoRepository.findByMotoristaId(motoristaId);
             Aluguel aluguel = getAluguelByID(aluguelId);
-            carrinho.getAluguels().add(aluguel);
+            carrinho.getAlugueis().add(aluguel);
 
             Carrinho updatedCarrinho = carrinhoRepository.save(carrinho);
 
@@ -201,10 +201,10 @@ public class CarrinhoService {
         try {
             LOGGER.info("Removendo aluguel com ID {} do carrinho com ID do motorista: {}", aluguelId, motoristaId);
 
-            Carrinho carrinho = carrinhoRepository.findbyMotoristaId(motoristaId);
+            Carrinho carrinho = carrinhoRepository.findByMotoristaId(motoristaId);
             Aluguel aluguel = getAluguelByID(aluguelId);
             aluguel.setCarrinho(null);
-            carrinho.getAluguels().remove(aluguel);
+            carrinho.getAlugueis().remove(aluguel);
 
             aluguelRepository.save(aluguel);
             Carrinho updatedCarrinho = carrinhoRepository.save(carrinho);

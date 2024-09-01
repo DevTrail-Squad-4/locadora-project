@@ -19,13 +19,13 @@ public class CarroToCarroDtoResponseConverter extends AbstractConverter<Carro, C
         CarroDtoResponse.setDailyValue(car.getValorDiario());
         CarroDtoResponse.setRented(car.isAlugado());
 
-        CarroDtoResponse.setAccessories(car.getAccessories());
+        CarroDtoResponse.setAccessories(car.getAcessorios());
 
-        if (car.getModel() != null) {
-            CarroDtoResponse.setDescription(car.getModel().getDescription());
-            CarroDtoResponse.setCategory(car.getModel().getCategory());
-            if (car.getModel().getFabricante() != null) {
-                CarroDtoResponse.setName(car.getModel().getFabricante().getName());
+        if (car.getModelo() != null) {
+            CarroDtoResponse.setDescription(car.getModelo().getDescricao());
+            CarroDtoResponse.setCategory(car.getModelo().getCategoria());
+            if (car.getModelo() .getFabricante() != null) {
+                CarroDtoResponse.setName(car.getModelo() .getFabricante().getName());
             }
         }
 
