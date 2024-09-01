@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 
 public interface AluguelRepository extends JpaRepository<Aluguel, Long> {
-    List<Aluguel> findByFinalizado();
-    List<Aluguel> findByNaoFinalizado();
+    List<Aluguel> findByFinalizadoTrue();
+    List<Aluguel> findByFinalizadoFalse();
 
 }
 

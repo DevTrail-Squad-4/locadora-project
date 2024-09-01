@@ -44,22 +44,22 @@ public class Carro {
     @Column(nullable = false)
     private boolean alugado = false;
 
-    @JsonIgnoreProperties("cars")
+    @JsonIgnoreProperties("carros")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "model_id", nullable = false)
     private Modelo model;
 
-    @JsonIgnoreProperties("cars")
+    @JsonIgnoreProperties("carros")
     @ManyToMany
     @JoinTable(
-            name = "car_accessories",
+            name = "acesssorios_carros",
             joinColumns = @JoinColumn(name = "car_id"),
             inverseJoinColumns = @JoinColumn(name = "accessory_id")
     )
     private List<Acessorio> accessories;
 
     @JsonIgnoreProperties("cars")
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "carro")
     private List<Aluguel> rents;
 
     @Column(name = "deleted", nullable = false)
