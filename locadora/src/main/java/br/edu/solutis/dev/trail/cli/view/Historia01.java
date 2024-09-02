@@ -40,7 +40,6 @@ public class Historia01 {
             }
         }
 
-        // Continuar com o cadastro se o CPF não estiver cadastrado
         System.out.print("Nome completo: ");
         String nome = scanner.nextLine();
 
