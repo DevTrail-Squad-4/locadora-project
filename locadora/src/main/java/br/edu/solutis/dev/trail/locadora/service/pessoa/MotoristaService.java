@@ -1,6 +1,7 @@
 package br.edu.solutis.dev.trail.locadora.service.pessoa;
 
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaCpfNotFoundException;
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaEmailNotFoundException;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaException;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaNotFoundException;
 import br.edu.solutis.dev.trail.locadora.mapper.GenericMapper;
@@ -29,12 +30,20 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
     private final MotoristaRepository driverRepository;
     private final GenericMapper<MotoristaDTO, Motorista> modelMapper;
 
+    public String findByEmail(String email){
+        LOGGER.info("Encontrando motorista com o email: {}", email);
+        Motorista motorista = driverRepository.findByEmail(email)
+                .orElseThrow(() -> new MotoristaEmailNotFoundException(email));
+
+        return "O email já existe!";
+    }
+
     public String findByCpf(String cpf) {
-        LOGGER.info("Encontrando motorista com o CPF: {}", cpf);
+        LOGGER.info("Encontrando motorista com o cpf: {}", cpf);
         Motorista motorista = driverRepository.findByCpf(cpf)
                 .orElseThrow(() -> new MotoristaCpfNotFoundException(cpf));
 
-        return "O cpf já existe!";
+        return "O email já existe!";
     }
 
     public MotoristaDTO findById(Long id) {
