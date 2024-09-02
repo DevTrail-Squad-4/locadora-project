@@ -13,7 +13,6 @@ git clone https://github.com/DevTrail-Squad-4/locadora-project
 - [Spring Boot](https://spring.io/)
 - [Spring Data](https://spring.io/projects/spring-data-jpa)
 - [Lombok](https://projectlombok.org/)
-- [SLF4J](https://www.slf4j.org/)
 - [ModelMapper](https://modelmapper.org/)
 - [Swagger](https://swagger.io/)
 - [MySQL](https://www.mysql.com/)
