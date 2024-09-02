@@ -24,7 +24,7 @@ public class MotoristaController {
     private final CarrinhoService carrinhoService;
 
     @Operation(
-            summary = "Buscar motorista por Email",
+            summary = "Verificar se Email existe",
             description = "Retorna uma mensagem indicando se o motorista foi encontrado pelo Email"
     )
     @GetMapping("/email")
@@ -40,7 +40,7 @@ public class MotoristaController {
     }
 
     @Operation(
-            summary = "Buscar motorista por CPF",
+            summary = "Verificar de CPF existe",
             description = "Retorna uma mensagem indicando se o motorista foi encontrado pelo CPF"
     )
     @GetMapping("/Cpf")
