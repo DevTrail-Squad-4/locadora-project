@@ -24,6 +24,22 @@ public class MotoristaController {
     private final CarrinhoService carrinhoService;
 
     @Operation(
+            summary = "Buscar motorista por Email",
+            description = "Retorna uma mensagem indicando se o motorista foi encontrado pelo Email"
+    )
+    @GetMapping("/email")
+    public ResponseEntity<String> checkEmailExists(@RequestParam String email) {
+        try {
+            String result = motoristaService.findByEmail(email);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (MotoristaCpfNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Operation(
             summary = "Buscar motorista por CPF",
             description = "Retorna uma mensagem indicando se o motorista foi encontrado pelo CPF"
     )
