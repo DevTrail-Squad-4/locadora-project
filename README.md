@@ -9,10 +9,15 @@ git clone https://github.com/DevTrail-Squad-4/locadora-project
 ```
 ### Divisão
 Daniel - Camadas Motorista e Funcionario | endPoints: MotoristaController e FuncionarioController.
+
 Hugo Rodrigues - Camadas ALuguel, Carrinho e ApoliceSeguro | endPoints: AluguelController, CarrinhoController e ApoliceSeguroController.
+
 Gabriel Silva - Camadas Modelo | endPoint: ModeloController.
+
 Thiago Gentil - Camadas Carros, Acessorio e Fabricante | endPoints: CarroController, AcessorioController e FabricanteControle.
+
 Rubens Costa - AluguelRepository, ApoliceSeguroRepository e CarrinhoRepository
+
 
 
 ## Tecnologias Utilizadas:
