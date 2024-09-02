@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface MotoristaRepository extends JpaRepository<Motorista,Long> {
+    Optional<Motorista> findByEmail(String email);
     Page<Motorista> findByDeletedFalse(Pageable pageable);
     Optional<Motorista> findByCpf(String cpf);
 
