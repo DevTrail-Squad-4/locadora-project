@@ -1,5 +1,6 @@
 package br.edu.solutis.dev.trail.locadora.controller.pessoa;
 
+import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaCpfNotFoundException;
 import br.edu.solutis.dev.trail.locadora.response.ErrorResponse;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaException;
 import br.edu.solutis.dev.trail.locadora.exception.pessoa.motorista.MotoristaNotFoundException;
@@ -21,6 +22,23 @@ import org.springframework.web.bind.annotation.*;
 public class MotoristaController {
     private final MotoristaService motoristaService;
     private final CarrinhoService carrinhoService;
+
+    @Operation(
+            summary = "Buscar motorista por CPF",
+            description = "Retorna uma mensagem indicando se o motorista foi encontrado pelo CPF"
+    )
+    @GetMapping("/Cpf")
+    public ResponseEntity<String> checkCpfExists(@RequestParam String cpf) {
+        try {
+            String result = motoristaService.findByCpf(cpf);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (MotoristaCpfNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @Operation(
             summary = "Listar por id",
