@@ -168,7 +168,7 @@ public class CarrinhoService {
             Carrinho carrinho = carrinhoRepository.findByMotoristaId(motoristaId);
             Aluguel aluguel = getAluguelByID(aluguelId);
 
-            if (carrinho.getAlugueis().contains(aluguel)) {
+            if (carrinho.getAluguel().contains(aluguel)) {
                 return aluguel;
             }
 
@@ -186,7 +186,7 @@ public class CarrinhoService {
 
             Carrinho carrinho = carrinhoRepository.findByMotoristaId(motoristaId);
             Aluguel aluguel = getAluguelByID(aluguelId);
-            carrinho.getAlugueis().add(aluguel);
+            carrinho.getAluguel().add(aluguel);
 
             Carrinho updatedCarrinho = carrinhoRepository.save(carrinho);
 
@@ -204,7 +204,7 @@ public class CarrinhoService {
             Carrinho carrinho = carrinhoRepository.findByMotoristaId(motoristaId);
             Aluguel aluguel = getAluguelByID(aluguelId);
             aluguel.setCarrinho(null);
-            carrinho.getAlugueis().remove(aluguel);
+            carrinho.getAluguel().remove(aluguel);
 
             aluguelRepository.save(aluguel);
             Carrinho updatedCarrinho = carrinhoRepository.save(carrinho);

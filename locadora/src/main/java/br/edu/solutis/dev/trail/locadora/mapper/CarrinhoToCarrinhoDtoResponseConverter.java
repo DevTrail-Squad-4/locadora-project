@@ -11,7 +11,7 @@ public class CarrinhoToCarrinhoDtoResponseConverter extends AbstractConverter<Ca
         carrinhoDtoResponse.setId(carrinho.getId());
         carrinhoDtoResponse.setNome(carrinho.getMotorista().getNome());
         carrinhoDtoResponse.setCpf(carrinho.getMotorista().getCpf());
-        carrinhoDtoResponse.setAluguel(carrinho.getAlugueis());
+        carrinhoDtoResponse.setAlugueis(carrinho.getAluguel());
 
         return carrinhoDtoResponse;
     }

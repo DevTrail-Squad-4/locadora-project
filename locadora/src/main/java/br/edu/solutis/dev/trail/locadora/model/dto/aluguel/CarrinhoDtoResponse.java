@@ -14,6 +14,6 @@ public class CarrinhoDtoResponse {
     private Long id;
     private String nome;
     private String cpf;
-    private List<Aluguel> aluguel;
+    private List<Aluguel> alugueis;
 }
 
