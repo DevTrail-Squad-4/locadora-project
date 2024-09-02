@@ -46,6 +46,7 @@ public class Historia01 {
             }
         }
 
+
         // Validação do nome
         String nome = null;
         while (true) {
