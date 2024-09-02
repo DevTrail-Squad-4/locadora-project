@@ -43,7 +43,7 @@ public class MotoristaService implements CrudService<MotoristaDTO> {
         Motorista motorista = driverRepository.findByCpf(cpf)
                 .orElseThrow(() -> new MotoristaCpfNotFoundException(cpf));
 
-        return "O email já existe!";
+        return "O cpf já existe!";
     }
 
     public MotoristaDTO findById(Long id) {
