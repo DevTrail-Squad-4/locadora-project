@@ -14,8 +14,33 @@ import java.util.Scanner;
 public class Historia01 {
     public static void main(String[] args) throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
+        HttpClient client = HttpClient.newHttpClient();
+        String cpf = null;
 
-        System.out.println("=== Cadastro de Cliente ===");
+        while (true) {
+            System.out.println("=== Cadastro de Cliente ===");
+            System.out.print("CPF: ");
+            cpf = scanner.nextLine();
+
+            HttpRequest checkRequest = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/motoristas/Cpf?cpf=" + cpf))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> checkResponse = client.send(checkRequest, HttpResponse.BodyHandlers.ofString());
+
+            if (checkResponse.statusCode() == 200) {
+                System.out.println("CPF já cadastrado. Por favor, insira um CPF diferente.");
+            } else if (checkResponse.statusCode() == 404) {
+                // CPF não cadastrado, saia do loop
+                break;
+            } else {
+                System.out.println("Erro ao verificar o CPF: " + checkResponse.body());
+                return;
+            }
+        }
+
+        // Continuar com o cadastro se o CPF não estiver cadastrado
         System.out.print("Nome completo: ");
         String nome = scanner.nextLine();
 
@@ -28,9 +53,6 @@ public class Historia01 {
             System.out.println("Data de nascimento inválida. Por favor, insira no formato YYYY-MM-DD.");
             return;
         }
-
-        System.out.print("CPF: ");
-        String cpf = scanner.nextLine();
 
         System.out.print("Número da CNH: ");
         String cnh = scanner.nextLine();
@@ -48,21 +70,18 @@ public class Historia01 {
             return;
         }
 
-        HttpClient client = HttpClient.newHttpClient();
+        String json = String.format("""
+                {
+                    "id": 3,
+                    "email": "%s",
+                    "nome": "%s",
+                    "cpf": "%s",
+                    "aniversario": "%s",
+                    "sexo": "%s",
+                    "cnh": "%s"
+                }
+                """, email, nome, cpf, aniversario, sexo, cnh);
 
-        String json = String.format(  """
-            {
-				      "id": 3,
-				      "email": "%s" ,
-				      "nome": "%s",
-				      "cpf": "%s",
-				      "aniversario": "%s",
-				      "sexo": "%s",
-				      "cnh": "%s"
-				    }
-        """,email, nome, cpf, aniversario, sexo ,cnh);
-
-        // Crie a requisição HTTP POST
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/motoristas"))
                 .header("Content-Type", "application/json")
@@ -71,9 +90,7 @@ public class Historia01 {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // Imprima o status da resposta e o corpo da resposta
         System.out.println("Status Code: " + response.statusCode());
         System.out.println("Response Body: " + response.body());
     }
-    }
-
+}
