@@ -1,5 +1,12 @@
 # Projeto Locadora de Veiculos 🚙
 
+## 🚀 Inicio
+
+### 📋 Clone o repositório
+
+```
+git clone https://github.com/DevTrail-Squad-4/locadora-project
+```
 ## 🛠️ Tecnologias Utilizadas:
 
 - [Java](https://www.oracle.com/java/technologies/javase/jdk20-archive-downloads.html)
@@ -10,14 +17,6 @@
 - [ModelMapper](https://modelmapper.org/)
 - [Swagger](https://swagger.io/)
 - [MySQL](https://www.mysql.com/)
-
-## 🚀 Inicio
-
-### 📋 Clone o repositório
-
-```
-git clone https://github.com/DevTrail-Squad-4/locadora-project
-```
 
 ## 📕 Documentação da API
 A documentação swagger será executada na porta 8080
