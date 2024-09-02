@@ -177,7 +177,7 @@ public class AluguelService {
     }
 
     public List<AluguelDtoResponse> findAlugueisAtivos(){
-        List<Aluguel> alugueisAtivos = aluguelRepository.findByFinalizadoTrue();
+        List<Aluguel> alugueisAtivos = aluguelRepository.findByFinalizadoFalse();
 
         try {
             return modelMapperResponse.mapList(alugueisAtivos, AluguelDtoResponse.class);
@@ -187,7 +187,7 @@ public class AluguelService {
     }
 
     public List<AluguelDtoResponse> findAlugueisFinalizados() {
-        List<Aluguel> alugueisFinalizados = aluguelRepository.findByFinalizadoFalse();
+        List<Aluguel> alugueisFinalizados = aluguelRepository.findByFinalizadoTrue();
 
         try {
             return modelMapperResponse.mapList(alugueisFinalizados, AluguelDtoResponse.class);

@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/carrinhos")
 @CrossOrigin
-public class CartController {
+public class CarrinhoController {
     private final CarrinhoService carrinhoService;
     private final AluguelService aluguelService;
 
@@ -34,7 +34,7 @@ public class CartController {
             description = "Retorna as informações do carrinho do motorista"
     )
     @GetMapping("/{motoristaId}")
-    public ResponseEntity<?> findByMotoristaId(@PathVariable Long motoristaId) {
+    public ResponseEntity<?> findCarrinhoByMotoristaId(@PathVariable Long motoristaId) {
         try {
             return new ResponseEntity<>(carrinhoService.findByMotoristaId(motoristaId), HttpStatus.OK);
         } catch (CarrinhoNotFoundException e) {
