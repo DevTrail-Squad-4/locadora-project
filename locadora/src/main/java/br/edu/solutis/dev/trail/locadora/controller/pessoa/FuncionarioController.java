@@ -43,7 +43,7 @@ public class FuncionarioController {
     @GetMapping
     public ResponseEntity<?> findAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size) {
+            @RequestParam(defaultValue = "2") int size) {
         try {
             return new ResponseEntity<>(funcionarioService.findAll(page, size), HttpStatus.OK);
         } catch (FuncionarioException e) {

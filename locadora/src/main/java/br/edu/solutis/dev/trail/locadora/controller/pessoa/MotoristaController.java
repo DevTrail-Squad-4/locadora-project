@@ -78,7 +78,7 @@ public class MotoristaController {
     @GetMapping
     public ResponseEntity<?> findAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size
+            @RequestParam(defaultValue = "2") int size
     ) {
         try {
             return new ResponseEntity<>(motoristaService.findAll(page, size), HttpStatus.OK);

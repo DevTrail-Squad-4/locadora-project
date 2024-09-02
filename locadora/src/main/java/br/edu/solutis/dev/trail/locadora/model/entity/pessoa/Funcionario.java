@@ -18,12 +18,15 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Funcionario extends Pessoa{
     @Column(unique = true, nullable = false)
-    private String registration;
+    private String matricula;
+
+    @Column(unique = true, nullable = false)
+    private String cnh;
 
     @Override
     public String toString() {
         return "Employee{" +
-                "registration='" + registration + '\'' +
+                "registration='" + matricula + '\'' +
                 "} " + super.toString();
     }
 }

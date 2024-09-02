@@ -25,7 +25,7 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED)
 public class FuncionarioService implements CrudService<FuncionarioDTO> {
     private static final Logger LOGGER = LoggerFactory.getLogger(FuncionarioService.class);
-    private final FuncionarioRepository employeeRepository;
+    private final FuncionarioRepository funcionarioRepository;
     private final GenericMapper<FuncionarioDTO, Funcionario> modelMapper;
 
     public FuncionarioDTO findById(Long id) {
@@ -40,7 +40,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
 
         try {
             Pageable paging = PageRequest.of(pageNo, pageSize);
-            Page<Funcionario> pagedEmployees = employeeRepository.findByDeletedFalse(paging);
+            Page<Funcionario> pagedEmployees = funcionarioRepository.findByDeletedFalse(paging);
 
             List<FuncionarioDTO> employeeDtos = modelMapper
                     .mapList(pagedEmployees.getContent(), FuncionarioDTO.class);
@@ -63,7 +63,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
         try {
             LOGGER.info("Adicionando funcionario: {}", payload);
 
-            Funcionario funcionario = employeeRepository
+            Funcionario funcionario = funcionarioRepository
                     .save(modelMapper.mapDtoToModel(payload, Funcionario.class));
 
             return modelMapper.mapModelToDto(funcionario, FuncionarioDTO.class);
@@ -84,7 +84,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
 
             updateEmployeeFields(payload, funcionarioDTO);
 
-            Funcionario funcionario = employeeRepository
+            Funcionario funcionario = funcionarioRepository
                     .save(modelMapper.mapDtoToModel(funcionarioDTO, Funcionario.class));
 
             return modelMapper.mapModelToDto(funcionario, FuncionarioDTO.class);
@@ -104,7 +104,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
             Funcionario funcionario = modelMapper.mapDtoToModel(funcionarioDTO, Funcionario.class);
             funcionario.setDeleted(true);
 
-            employeeRepository.save(funcionario);
+            funcionarioRepository.save(funcionario);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new FuncionarioException("Um erro ocorreu ao deletar funcionario.", e);
@@ -127,7 +127,7 @@ public class FuncionarioService implements CrudService<FuncionarioDTO> {
     }
 
     private Funcionario getEmployee(Long id) {
-        return employeeRepository.findById(id).orElseThrow(() -> {
+        return funcionarioRepository.findById(id).orElseThrow(() -> {
             LOGGER.error("Funcionario com o id {} nao achado.", id);
             return new FuncionarioNotFoundException(id);
         });
