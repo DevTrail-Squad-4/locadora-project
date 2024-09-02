@@ -35,8 +35,8 @@ public class ModeloSeeder implements CommandLineRunner {
         Fabricante fabricante2 = fabricanteRepository.findById(2L).orElseThrow(() -> new RuntimeException("Fabricante não encontrado"));
 
         // Criar e salvar os modelos
-        Modelo modelo1 = new Modelo(null, "Sedan Compacto", ModeloCategoriaEnum.COMPACT_SEDAN, fabricante1, null, false, LocalDateTime.now(), LocalDateTime.now());
-        Modelo modelo2 = new Modelo(null, "Hatchback Compacto", ModeloCategoriaEnum.COMPACT_HATCHBACK, fabricante2, null, false, LocalDateTime.now(), LocalDateTime.now());
+        Modelo modelo1 = new Modelo(null, "Sedan Compacto, ideal para locomoção urbana com baixo consumo de combustível. Equipado com ar-condicionado, direção elétrica, e sistema de navegação integrado.", ModeloCategoriaEnum.COMPACT_SEDAN, fabricante1, null, false, LocalDateTime.now(), LocalDateTime.now());
+        Modelo modelo2 = new Modelo(null, "Hatchback compacto, perfeito para quem busca agilidade e economia no dia a dia. Conta com espaço interno otimizado, ar-condicionado, direção hidráulica e conectividade Bluetooth.", ModeloCategoriaEnum.COMPACT_HATCHBACK, fabricante2, null, false, LocalDateTime.now(), LocalDateTime.now());
 
         modeloRepository.saveAll(List.of(modelo1, modelo2));
     }
